@@ -1,1 +1,1 @@
-# app_assets
+# CareCart Shopify APP
