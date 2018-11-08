@@ -1,4 +1,4 @@
-//GH v.1
+// js-storefront-script.js GH v.1.0.2
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
     return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
