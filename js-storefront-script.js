@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.0.3
+// js-storefront-script.js GH v.1.0.4
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
     return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
@@ -349,6 +349,7 @@ function AbandonedCart() {
 
                 if (!cartData.email) {
                     showAddToCartPopup(addToCartPopUpData, function () {
+                        $('body').find('.mfp-wrap').css('display', 'none');
                         carecartJquery('#cc-atcp-table', 'body').show();
                     });
                 }
@@ -358,6 +359,7 @@ function AbandonedCart() {
                     submitEvent = e;
                     if (!cartData.email) {
                         showAddToCartPopup(addToCartPopUpData, function () {
+                            $('body').find('.mfp-wrap').css('display', 'none');
                             carecartJquery('#cc-atcp-table', 'body').show();
                         });
                     } else {
@@ -623,7 +625,7 @@ function AbandonedCart() {
         });
 
         carecartJquery('body').on('click', '#cc_f-p-close', function (e) {
-
+            $('body').find('.mfp-wrap').css('display', 'block');
             carecartJquery('#cc-atcp-table', 'body').hide();
         });
 
@@ -638,6 +640,7 @@ function AbandonedCart() {
             if (!validateEmail(email)) {
                 carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').show();
             } else {
+                $('body').find('.mfp-wrap').css('display', 'block');
                 customer.email = email;
                 abandonedCart.process(1, function () {
                     carecartJquery('form[action="/cart/add"]').submit();
