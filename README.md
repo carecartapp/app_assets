@@ -1,4 +1,4 @@
-# Care Cart Abandoned Recovery
+# CareCart Abandoned Recovery
 ## Recover Abandon Cart Orders by Sales & Marketing Automation
 
 https://apps.shopify.com/care-cart
