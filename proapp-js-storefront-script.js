@@ -1,4 +1,5 @@
-// proapp-js-storefront-script.js GH V.1.0.4
+// proapp-js-storefront-script.js GH v.1.0.5
+// Updated at: 12-11-2018
 
 function getCurrentURL() {
     return window.location.href;
