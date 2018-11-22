@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.0.5
+// js-storefront-script.js GH v.1.0.6
 // Updated at: 12-11-2018
 
 function getQueryParameters() {
@@ -669,9 +669,10 @@ function AbandonedCart() {
                 'logo_url': (pnSubscriptionPopupData && pnSubscriptionPopupData.landing_page_logo_url) ? pnSubscriptionPopupData.landing_page_logo_url : '',
             };
             popupData = encodeURI(JSON.stringify(popupData));
-
-            var permissionViewLink = 'https://' + ccPnAuthUrl + '/CCPnPermission.php?cc_pn_lp=' + popupData + '&shop=' + store.domain;
-            var permissionPopup = openPermissionTab(permissionViewLink, store.domain, '400px', '400px');
+            
+            var windowtHostName = window.location.hostname;
+            var permissionViewLink = 'https://' + ccPnAuthUrl + '/CCPnPermission.php?cc_pn_lp=' + popupData + '&shop=' + windowtHostName;
+            var permissionPopup = openPermissionTab(permissionViewLink, windowtHostName, '400px', '400px');
         });
 
         carecartJquery('body').on('submit', 'form[action="/cart/add"]', function (e) {
