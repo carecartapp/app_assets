@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.6
-// Updated at: 12-11-2018
+// js-storefront-script.js GH v.1.0.7
+// Updated at: 18-12-2018
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -27,8 +27,16 @@ function scriptInjection(src, callback) {
 
     document.getElementsByTagName('head')[0].appendChild(script);
 
-
 }
+
+function cssFileInjection(href) {
+    var link = document.createElement("link");
+    link.href = href;
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    document.getElementsByTagName("head")[0].appendChild(link);
+}
+cssFileInjection("https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css");
 
 function AbandonedCart() {
 
@@ -46,6 +54,7 @@ function AbandonedCart() {
                 window.carecartJquery = jQuery.noConflict(true);
                 scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
                 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
+                scriptInjection("https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js");
 
 
                 if (carecartJquery('#care-cart-customer-information').length == 0 || carecartJquery('#care-cart-shop-information').length == 0) {
@@ -450,37 +459,66 @@ function AbandonedCart() {
         return localStorage.getItem('gdrp_accepted_status');
     }
 
-
     function showAddToCartPopup(data, callBack) {
 
         var closeButton = "";
         if (data.is_active_close_button == 1) {
-            closeButton = '<button type="button" id="cc_f-p-close" style="position: absolute; width: unset; top: 0;right: 5px;cursor: pointer;color: #000;z-index: 100;padding: 5px;background-position: center;background-repeat: no-repeat; background-color: transparent;border: 0;-webkit-appearance: none;float: right;font-size: 1.5rem;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;opacity: .5;}">x</button>';
+            closeButton = "<button type='button' id='cc_f-p-close' style='position: absolute; width: unset; top: 0;right: 5px;cursor: pointer;color: #000;z-index: 100;padding: 5px;background-position: center;background-repeat: no-repeat; background-color: transparent;border: 0;-webkit-appearance: none;float: right;font-size: 1.5rem;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;opacity: .5;}'>x</button>";
+        }
+        var SCRIPTURL = "https://app.carecart.io/email-collector-pop.html";
+        var is_active_close_button = data.is_active_close_button;
+        var heading_text = data.heading_text;
+        var heading_color = data.heading_color.replace(/^#+/i, '');
+        var description_text = data.description_text;
+        var description_color = data.description_color.replace(/^#+/i, '');
+        var email_placeholder = data.email_placeholder;
+        var button_text_color = data.button_text_color.replace(/^#+/i, '');
+        var button_background_color = data.button_background_color.replace(/^#+/i, '');
+        var button_text = data.button_text;
+
+        if(carecartJquery( window ).width() <=676 && carecartJquery( window ).width() >=580){
+            var height = 400;
+        }else if(carecartJquery( window ).width() <=580 && carecartJquery( window ).width() >=460){
+            var height = 500;
+        }else if(carecartJquery( window ).width() <=460 && carecartJquery( window ).width() >=380){
+            var height = 600;
+        }else if(carecartJquery( window ).width() <380){
+            var height = 700;
+        }else{
+            var height = 300;
         }
 
-        var popUpHTML = '<style>@media (max-width: 768px) {#cc-atcp-table #cc-atcp-content-body { width: 90% !important; } #cc-atcp-table{ position: absolute !important; } }</style><table id="cc-atcp-table" style="display:none;position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; text-align: center; vertical-align: middle;width: 100%; height: 100%; background-color: rgba(0,0,0,0.1); z-index: 999992">' +
-            '<tr><td align="center" valign="middle"><div id="cc-atcp-content-body" style="border-radius:5px;margin: 0 auto;width: 700px; background: white; border: 1px solid #f3f3f3;">' +
-            '<div style="position: relative;display: -webkit-box;display: -ms-flexbox;-webkit-box-orient: vertical;-webkit-box-direction: normal;-ms-flex-direction: column;flex-direction: column;width: 100%;pointer-events: auto;background-clip: padding-box;border-radius: .3rem; outline: 0;">' +
-            '<div style="padding: 20px;margin: 20px 0 0 0;border-radius: 5px;">' +
-            '<div class="cc_preview-email-content" style="width: 100%;text-align: center;vertical-align: middle;padding: 15px;">' +
-            closeButton +
-            '<div class="cc_preview-email-content-container" style="position: relative;border-radius: 5px 5px 0 0;padding-top: 0;padding-bottom: 10px;text-align: center;padding-left: 18px;padding-right: 18px;margin-bottom: 10px;">' +
-            '<h2 id="cc_f-p-preview-heading" class="cc_preview-email-heading" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;word-break:break-all;padding-top: 0;margin: 0 0 20px 0;font-size: 30px;font-weight: bold;line-height: 36px;text-align: center;display: block;text-transform: initial;color:' + data.heading_color + '">' + data.heading_text + '</h2>' +
-            '<p style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;word-break:break-all;margin: 0 0 10px;color:' + data.description_color + '" id="cc_f-p-preview-text">' + data.description_text + '</p></div>' +
-            '<div style="padding: 0 40px; overflow: hidden">' +
-            '<div style="padding-right: 5px; width: 69%; float: left">' +
-            '<input style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;-webkit-appearance: none;background: #fff !important;border-width: 1px !important;border-style: solid !important;border-color: #ccc;color: rgba(0, 0, 0, 0.75) !important;display: block;font-size: 18px !important;font-style: normal;line-height: 20px !important;margin: 0 0 16px 0;padding: 8px;height: 40px;width: 100%;max-width: none !important;margin-bottom: 10px;outline: none !important;box-shadow: none;box-sizing: border-box;border-radius: 2px;" id="cc_f-p-preview-email-placeholder" class="cc_preview-email-input" type="text" name="email" placeholder="' + data.email_placeholder + '"><p style="color: red;display: none;" id="cc_f-p-preview-email-placeholder-error">Please Enter Valid Email</p>' +
-            '</div>' +
-            '<div style="padding-left: 0px; width: 30%; float: right">' +
-            '<button id="cc_f-p-preview-email-btn" type="button" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;word-break:break-all;width: 100%;border: none;padding: 7px 5px;border-radius: 2px;color:' + data.button_text_color + ';background-color:' + data.button_background_color + ';cursor: pointer;">' + data.button_text + '</button>' +
-            '</div></div></div></div></div></div>' +
-            '</td></tr></table>';
+        $.fancybox.open({
+                    height: height,
+                    width: 710,
+                    src  : SCRIPTURL+'?is_active_close_button='+ encodeURI(is_active_close_button)+'&heading_text='+encodeURI(heading_text)+'&heading_color='+encodeURI(heading_color)+'&description_text='+encodeURI(description_text)+'&description_color='+encodeURI(description_color)+'&button_text='+encodeURI(button_text)+'&email_placeholder='+encodeURI(email_placeholder)+'&button_text_color='+encodeURI(button_text_color)+'&button_background_color='+encodeURI(button_background_color),
+                    type : 'iframe',
+                    opts : {
+                        afterShow : function( instance, current ) {
+                    },
+                    buttons: [
+                    ],
+                    clickOutside: false,
+                    allowfullscreen: false,
+                    clickSlide: false,
+                    dblclickContent: false,
+                    dblclickSlide: false,
+                    dblclickOutside: false,
+                    helpers : {
+                        overlay : {
+                            closeClick: false,
+                            dblclickContent: false,
+                            dblclickSlide: false,
+                            dblclickOutside: false,
+                        },
+                    },
+                    },
+            });
 
-
-        carecartJquery('body').append(popUpHTML);
         if (typeof callBack == 'function') callBack();
 
     }
+
 
     function showPnSubscriptionPopup(popupData) {
 
@@ -649,6 +687,31 @@ function AbandonedCart() {
                 });
             }
         });
+
+            var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+            var eventer = window[eventMethod];
+            var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+            // Listen to message from child window
+            eventer(messageEvent,function(e) {
+                //console.log(e);
+                var key = e.message ? "message" : "data";
+                var data = e[key];
+                //run function//
+                //console.log(data.email);
+                if(data != null && data=='close_email'){
+                    $.fancybox.close({});
+                }
+                if(data.email!=null){
+                    customer.email = data.email;
+                    //console.log(customer.email);
+                    abandonedCart.process(1, function () {
+                        carecartJquery('form[action="/cart/add"]').submit();
+                    });
+                    $.fancybox.close({});
+                }
+
+            },false);
 
 
         carecartJquery('body').on('click', '#cc-pn-disallow-subs-btn', function () {
