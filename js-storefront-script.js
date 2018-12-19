@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.7
-// Updated at: 18-12-2018
+// js-storefront-script.js GH v.1.0.8
+// Updated at: 20-12-2018
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -43,7 +43,7 @@ function AbandonedCart() {
     var customer = {};
     var store = {};
     var apiBaseUrl = "https://app.carecart.io";
-    var ccPnAuthUrl = "push-notification.ml";
+    var ccPnAuthUrl = "pn.carecart.io";
     var pnSubscriptionPopupData = {};
 
     this.init = function (callback, callbackArgs) {
@@ -475,22 +475,25 @@ function AbandonedCart() {
         var button_text_color = data.button_text_color.replace(/^#+/i, '');
         var button_background_color = data.button_background_color.replace(/^#+/i, '');
         var button_text = data.button_text;
-
+        var width = 710;
         if(carecartJquery( window ).width() <=676 && carecartJquery( window ).width() >=580){
             var height = 400;
         }else if(carecartJquery( window ).width() <=580 && carecartJquery( window ).width() >=460){
             var height = 500;
-        }else if(carecartJquery( window ).width() <=460 && carecartJquery( window ).width() >=380){
+        }else if(carecartJquery( window ).width() <=460 && carecartJquery( window ).width() >=420){
             var height = 600;
-        }else if(carecartJquery( window ).width() <380){
+        }else if(carecartJquery( window ).width() <=420 && carecartJquery( window ).width() >=370){
             var height = 700;
+        }else if(carecartJquery( window ).width() <370){
+            var height = 750;
+
         }else{
             var height = 300;
         }
 
         $.fancybox.open({
                     height: height,
-                    width: 710,
+                    width: width,
                     src  : SCRIPTURL+'?is_active_close_button='+ encodeURI(is_active_close_button)+'&heading_text='+encodeURI(heading_text)+'&heading_color='+encodeURI(heading_color)+'&description_text='+encodeURI(description_text)+'&description_color='+encodeURI(description_color)+'&button_text='+encodeURI(button_text)+'&email_placeholder='+encodeURI(email_placeholder)+'&button_text_color='+encodeURI(button_text_color)+'&button_background_color='+encodeURI(button_background_color),
                     type : 'iframe',
                     opts : {
@@ -499,7 +502,7 @@ function AbandonedCart() {
                     buttons: [
                     ],
                     clickOutside: false,
-                    allowfullscreen: false,
+                    allowfullscreen: true,
                     clickSlide: false,
                     dblclickContent: false,
                     dblclickSlide: false,
@@ -510,7 +513,16 @@ function AbandonedCart() {
                             dblclickContent: false,
                             dblclickSlide: false,
                             dblclickOutside: false,
-                        },
+                            clickOutside: false,
+                            clickSlide: false,
+
+                            },
+                    },
+                    touch : false,
+                    mobile: {
+                        clickOutside: false,
+                        clickSlide: false,
+
                     },
                     },
             });
@@ -709,6 +721,13 @@ function AbandonedCart() {
                         carecartJquery('form[action="/cart/add"]').submit();
                     });
                     $.fancybox.close({});
+                }
+                if(data=='mobilefocus'){
+                    if(carecartJquery( '.fancybox-content' ).width()<=450){
+                    //carecartJquery( '.fancybox-content' ).css('width', '100%');
+                    setTimeout(function(){     carecartJquery( '.fancybox-content' ).css('width', '100%'); }, 1000);
+
+                    }
                 }
 
             },false);
