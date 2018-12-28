@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.9
-// Updated at: 20-12-2018
+// js-storefront-script.js GH v.1.0.11
+// Updated at: 28-12-2018
 
 function getQueryParameters() {
 var prmstr = window.location.search.substr(1);
@@ -54,7 +54,7 @@ scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/
 window.carecartJquery = jQuery.noConflict(true);
 scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-scriptInjection("https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js");
+scriptInjection("https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.0.10/fancybox.js");
 
 
 if (carecartJquery('#care-cart-customer-information').length == 0 || carecartJquery('#care-cart-shop-information').length == 0) {
@@ -588,7 +588,6 @@ window.org_title_marq = 0;
 carecartJquery('body').on('mousemove', function (e) {
 
 
-console.log('mousemove');
 if (window.cc_adv_title_timer > 0) {
 clearTimeout(window.cc_adv_title_timer);
 window.org_title_marq = 0;
