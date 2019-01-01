@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.11
-// Updated at: 28-12-2018
+// js-storefront-script.js GH v.1.0.12
+// Updated at: 01-01-2019
 
 function getQueryParameters() {
 var prmstr = window.location.search.substr(1);
@@ -36,7 +36,6 @@ link.type = "text/css";
 link.rel = "stylesheet";
 document.getElementsByTagName("head")[0].appendChild(link);
 }
-cssFileInjection("https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css");
 
 function AbandonedCart() {
 
@@ -54,7 +53,6 @@ scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/
 window.carecartJquery = jQuery.noConflict(true);
 scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-scriptInjection("https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.0.10/fancybox.js");
 
 
 if (carecartJquery('#care-cart-customer-information').length == 0 || carecartJquery('#care-cart-shop-information').length == 0) {
@@ -461,75 +459,33 @@ return localStorage.getItem('gdrp_accepted_status');
 
 function showAddToCartPopup(data, callBack) {
 
-var closeButton = "";
-if (data.is_active_close_button == 1) {
-closeButton = "<button type='button' id='cc_f-p-close' style='position: absolute; width: unset; top: 0;right: 5px;cursor: pointer;color: #000;z-index: 100;padding: 5px;background-position: center;background-repeat: no-repeat; background-color: transparent;border: 0;-webkit-appearance: none;float: right;font-size: 1.5rem;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;opacity: .5;}'>x</button>";
-}
-var SCRIPTURL = "https://app.carecart.io/email-collector-pop.html";
-var is_active_close_button = data.is_active_close_button;
-var heading_text = data.heading_text;
-var heading_color = data.heading_color.replace(/^#+/i, '');
-var description_text = data.description_text;
-var description_color = data.description_color.replace(/^#+/i, '');
-var email_placeholder = data.email_placeholder;
-var button_text_color = data.button_text_color.replace(/^#+/i, '');
-var button_background_color = data.button_background_color.replace(/^#+/i, '');
-var button_text = data.button_text;
-var width = 710;
-if(carecartJquery( window ).width() <=676 && carecartJquery( window ).width() >=580){
-var height = 400;
-}else if(carecartJquery( window ).width() <=580 && carecartJquery( window ).width() >=460){
-var height = 500;
-}else if(carecartJquery( window ).width() <=460 && carecartJquery( window ).width() >=420){
-var height = 600;
-}else if(carecartJquery( window ).width() <=420 && carecartJquery( window ).width() >=370){
-var height = 700;
-}else if(carecartJquery( window ).width() <370){
-var height = 750;
+        var closeButton = "";
 
-}else{
-var height = 300;
-}
+        if (data.is_active_close_button == 1) {
+            closeButton = "<button type='button' id='cc_f-p-close' style='position: absolute; width: unset; top: 0;right: 5px;cursor: pointer;color: #000;z-index: 100;padding: 5px;background-position: center;background-repeat: no-repeat; background-color: transparent;border: 0;-webkit-appearance: none;float: right;font-size: 1.5rem;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;opacity: .5;}'>x</button>";
+        }
+        var SCRIPTURL = "{{Config::get('app.url')}}/email-collector-pop.html";
+        var is_active_close_button = data.is_active_close_button;
+        var heading_text = data.heading_text;
+        var heading_color = data.heading_color.replace(/^#+/i, '');
+        var description_text = data.description_text;
+        var description_color = data.description_color.replace(/^#+/i, '');
+        var email_placeholder = data.email_placeholder;
+        var button_text_color = data.button_text_color.replace(/^#+/i, '');
+        var button_background_color = data.button_background_color.replace(/^#+/i, '');
+        var button_text = data.button_text;
+        var SRC_URL = SCRIPTURL+'?is_active_close_button='+ encodeURI(is_active_close_button)+'&heading_text='+encodeURI(heading_text)+'&heading_color='+encodeURI(heading_color)+'&description_text='+encodeURI(description_text)+'&description_color='+encodeURI(description_color)+'&button_text='+encodeURI(button_text)+'&email_placeholder='+encodeURI(email_placeholder)+'&button_text_color='+encodeURI(button_text_color)+'&button_background_color='+encodeURI(button_background_color);
 
-$.fancybox.open({
-height: height,
-width: width,
-src  : SCRIPTURL+'?is_active_close_button='+ encodeURI(is_active_close_button)+'&heading_text='+encodeURI(heading_text)+'&heading_color='+encodeURI(heading_color)+'&description_text='+encodeURI(description_text)+'&description_color='+encodeURI(description_color)+'&button_text='+encodeURI(button_text)+'&email_placeholder='+encodeURI(email_placeholder)+'&button_text_color='+encodeURI(button_text_color)+'&button_background_color='+encodeURI(button_background_color),
-type : 'iframe',
-opts : {
-afterShow : function( instance, current ) {
-},
-buttons: [
-],
-clickOutside: false,
-allowfullscreen: true,
-clickSlide: false,
-dblclickContent: false,
-dblclickSlide: false,
-dblclickOutside: false,
-helpers : {
-overlay : {
-closeClick: false,
-dblclickContent: false,
-dblclickSlide: false,
-dblclickOutside: false,
-clickOutside: false,
-clickSlide: false,
+        var popUpHTML = '<style>@media (max-width: 768px) {#cc-atcp-table #cc-atcp-content-body { width: 100% !important; } #cc-atcp-table{ /*position: absolute !important;*/ } } @media (max-width: 420px) {#cc-atcp-table #cc-atcp-content-body { height: 320px !important; } }</style><table id="cc-atcp-table" style="display:none;position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; text-align: center; vertical-align: middle;width: 100%; height: 100%; background-color: rgba(0,0,0,0.1); z-index: 999992">' +
+            '<tr><td align="center" valign="middle"><div id="cc-atcp-content-body" style="border-radius:5px;margin: 0 auto;width: 700px;height: 290px; background: white; border: 1px solid #f3f3f3;">' +
+            '<iframe id="MainPopupIframeCCEC" style="border: none; height:100%; width: 100%;" src="' + SRC_URL + '"></iframe></div>' +
+            '</td></tr></table>';
 
-},
-},
-touch : false,
-mobile: {
-clickOutside: false,
-clickSlide: false,
+        carecartJquery('body').append(popUpHTML);
 
-},
-},
-});
+        if (typeof callBack == 'function') callBack();
 
-if (typeof callBack == 'function') callBack();
-
-}
+    }
 
 
 function showPnSubscriptionPopup(popupData) {
@@ -708,7 +664,7 @@ var data = e[key];
 //run function//
 //console.log(data.email);
 if(data != null && data=='close_email'){
-$.fancybox.close({});
+carecartJquery('#cc-atcp-table', 'body').hide();
 }
 if(data.email!=null){
 customer.email = data.email;
@@ -716,7 +672,7 @@ customer.email = data.email;
 abandonedCart.process(1, function () {
 carecartJquery('form[action="/cart/add"]').submit();
 });
-$.fancybox.close({});
+carecartJquery('#cc-atcp-table', 'body').hide();
 }
 if(data=='mobilefocus'){
 if(carecartJquery( '.fancybox-content' ).width()<=450){
