@@ -464,7 +464,7 @@ function showAddToCartPopup(data, callBack) {
         if (data.is_active_close_button == 1) {
             closeButton = "<button type='button' id='cc_f-p-close' style='position: absolute; width: unset; top: 0;right: 5px;cursor: pointer;color: #000;z-index: 100;padding: 5px;background-position: center;background-repeat: no-repeat; background-color: transparent;border: 0;-webkit-appearance: none;float: right;font-size: 1.5rem;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;opacity: .5;}'>x</button>";
         }
-        var SCRIPTURL = "{{Config::get('app.url')}}/email-collector-pop.html";
+        var SCRIPTURL = "https://app.carecart.io/email-collector-pop.html";
         var is_active_close_button = data.is_active_close_button;
         var heading_text = data.heading_text;
         var heading_color = data.heading_color.replace(/^#+/i, '');
