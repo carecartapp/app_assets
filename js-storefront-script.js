@@ -669,9 +669,7 @@ if(data.email!=null){
 customer.email = data.email;
 //console.log(customer.email);
 abandonedCart.process(1, function () {
-    if(!isAjax) {
-       carecartJquery('form[action="/cart/add"]').submit();
-     }
+    carecartJquery('form[action="/cart/add"]').submit();
 });
 carecartJquery('#cc-atcp-table', 'body').hide();
 }
