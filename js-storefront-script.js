@@ -1,6 +1,6 @@
 // js-storefront-script.js GH v.1.0.12
 // Updated at: 01-01-2019
-
+var isAjax = false;
 function getQueryParameters() {
 var prmstr = window.location.search.substr(1);
 return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
@@ -670,7 +670,9 @@ if(data.email!=null){
 customer.email = data.email;
 //console.log(customer.email);
 abandonedCart.process(1, function () {
-carecartJquery('form[action="/cart/add"]').submit();
+    if(!isAjax) {
+       carecartJquery('form[action="/cart/add"]').submit();
+     }
 });
 carecartJquery('#cc-atcp-table', 'body').hide();
 }
@@ -698,6 +700,7 @@ setTimeout(function(){     carecartJquery( '.fancybox-content' ).css('width', '1
             var lastPart = url.split('/');
             var name = lastPart[lastPart.length-1];
             if(name == 'add.js' || name == 'change.js') {
+                isAjax = true;
                 //Show email collector
                 console.log( 'show collector in ajax call' );
                 abandonedCart.process(0);
