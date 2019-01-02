@@ -1,5 +1,6 @@
 // js-storefront-script.js GH v.1.0.12
 // Updated at: 01-01-2019
+var isAjax = 0;
 function getQueryParameters() {
 var prmstr = window.location.search.substr(1);
 return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
@@ -669,7 +670,9 @@ if(data.email!=null){
 customer.email = data.email;
 //console.log(customer.email);
 abandonedCart.process(1, function () {
-    carecartJquery('form[action="/cart/add"]').submit();
+    if(isAjax == 0) {
+                        carecartJquery('form[action="/cart/add"]').submit();
+                    }
 });
 carecartJquery('#cc-atcp-table', 'body').hide();
 }
@@ -682,6 +685,35 @@ setTimeout(function(){     carecartJquery( '.fancybox-content' ).css('width', '1
 }
 
 },false);
+    
+    var proxied = window.XMLHttpRequest.prototype.send;
+        window.XMLHttpRequest.prototype.send = function() {
+            //console.log( arguments );
+            //Here is where you can add any code to process the request.
+            //If you want to pass the Ajax request object, pass the 'pointer' below
+            var pointer = this
+            var intervalId = window.setInterval(function(){
+                if(pointer.readyState != 4){
+                    return;
+                }
+                var url = pointer.responseURL;
+                var lastPart = url.split('/');
+                var name = lastPart[lastPart.length-1];
+                if(name == 'add.js' || name == 'change.js') {
+                    isAjax = 1;
+                    //Show email collector
+                    console.log( 'show collector in ajax call' );
+                    abandonedCart.process(0);
+                    setTimeout(function(){  carecartJquery( '.mfp-wrap' ).css('display', 'block'); }, 2000);
+
+                }
+                //Here is where you can add any code to process the response.
+                //If you want to pass the Ajax request object, pass the 'pointer' below
+                clearInterval(intervalId);
+
+            }, 1);//I found a delay of 1 to be sufficient, modify it as you need.
+            return proxied.apply(this, [].slice.call(arguments));
+        };
 
 carecartJquery('body').on('click', '#cc-pn-disallow-subs-btn', function () {
 window.localStorage.setItem('cc-pn-subscription-popup', 'DENIED');
@@ -711,6 +743,7 @@ carecartJquery('body').on('submit', 'form[action="/cart/add"]', function (e) {
 console.clear();
 console.log('add to cart clicked....');
 setTimeout(function () {
+    isAjax = 0;
 abandonedCart.process(0);
 }, 2000);
 });
