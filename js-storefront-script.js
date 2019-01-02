@@ -476,7 +476,7 @@ function showAddToCartPopup(data, callBack) {
         var button_text = data.button_text;
         var SRC_URL = SCRIPTURL+'?is_active_close_button='+ encodeURI(is_active_close_button)+'&heading_text='+encodeURI(heading_text)+'&heading_color='+encodeURI(heading_color)+'&description_text='+encodeURI(description_text)+'&description_color='+encodeURI(description_color)+'&button_text='+encodeURI(button_text)+'&email_placeholder='+encodeURI(email_placeholder)+'&button_text_color='+encodeURI(button_text_color)+'&button_background_color='+encodeURI(button_background_color);
 
-        var popUpHTML = '<style>@media (max-width: 768px) {#cc-atcp-table #cc-atcp-content-body { width: 100% !important; } #cc-atcp-table{ /*position: absolute !important;*/ } } @media (max-width: 420px) {#cc-atcp-table #cc-atcp-content-body { height: 320px !important; } }</style><table id="cc-atcp-table" style="display:none;position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; text-align: center; vertical-align: middle;width: 100%; height: 100%; background-color: rgba(0,0,0,0.1); z-index: 999992">' +
+        var popUpHTML = '<style>@media (max-width: 768px) {#cc-atcp-table #cc-atcp-content-body { width: 100% !important; } #cc-atcp-table{ /*position: absolute !important;*/ } } @media (max-width: 420px) {#cc-atcp-table #cc-atcp-content-body { height: 320px !important; } }</style><table id="cc-atcp-table" style="display:none;border:none;position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; text-align: center; vertical-align: middle;width: 100%; height: 100%; background-color: rgba(0,0,0,0.1); z-index: 999992">' +
             '<tr><td align="center" valign="middle"><div id="cc-atcp-content-body" style="border-radius:5px;margin: 0 auto;width: 700px;height: 290px; background: white; border: 1px solid #f3f3f3;">' +
             '<iframe id="MainPopupIframeCCEC" style="border: none; height:100%; width: 100%;" src="' + SRC_URL + '"></iframe></div>' +
             '</td></tr></table>';
@@ -684,6 +684,33 @@ setTimeout(function(){     carecartJquery( '.fancybox-content' ).css('width', '1
 
 },false);
 
+    var proxied = window.XMLHttpRequest.prototype.send;
+    window.XMLHttpRequest.prototype.send = function() {
+        //console.log( arguments );
+        //Here is where you can add any code to process the request.
+        //If you want to pass the Ajax request object, pass the 'pointer' below
+        var pointer = this
+        var intervalId = window.setInterval(function(){
+            if(pointer.readyState != 4){
+                return;
+            }
+            var url = pointer.responseURL;
+            var lastPart = url.split('/');
+            var name = lastPart[lastPart.length-1];
+            if(name == 'add.js' || name == 'change.js') {
+                //Show email collector
+                console.log( 'show collector in ajax call' );
+                abandonedCart.process(0);
+                setTimeout(function(){  carecartJquery( '.mfp-wrap' ).css('display', 'block'); }, 2000);
+
+            }
+            //Here is where you can add any code to process the response.
+            //If you want to pass the Ajax request object, pass the 'pointer' below
+            clearInterval(intervalId);
+
+        }, 1);//I found a delay of 1 to be sufficient, modify it as you need.
+        return proxied.apply(this, [].slice.call(arguments));
+    };
 
 carecartJquery('body').on('click', '#cc-pn-disallow-subs-btn', function () {
 window.localStorage.setItem('cc-pn-subscription-popup', 'DENIED');
