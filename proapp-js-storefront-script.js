@@ -1,6 +1,8 @@
-// proapp-js-storefront-script.js GH v.1.0.5
-// Updated at: 12-11-2018
+// proapp-js-storefront-script.js GH v.1.0.6
+// Updated at: 09-01-2019
 
+//zeb 8-1-2019 
+var isAjax = 0;
 function getCurrentURL() {
     return window.location.href;
 }
@@ -78,6 +80,7 @@ function AbandonedCart() {
         // console.log("Initialization started");
 
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
+            scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js", function () { //zeb 8-1-2019
             window.carecartJquery = jQuery.noConflict(true);
             scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
             cssFileInjection("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all");
@@ -119,7 +122,7 @@ function AbandonedCart() {
         });
 
         window.addEventListener("message", receiveMessage, false);
-
+    })
 
     }
 
@@ -335,6 +338,17 @@ function AbandonedCart() {
                 // console.log('Recovering cart...')
             } else {
                 // console.log("Update cart on command center");
+                //zeb 8-1-2019
+                var proCartHash_cached = "1";
+                var proCartHash_live = "2";
+
+                try {
+                proCartHash_cached = String(window.localStorage.getItem('proCartHash_cached'));
+                proCartHash_live = CryptoJS.MD5(JSON.stringify(cart)).toString();
+                } catch (e) { }
+
+                if (proCartHash_cached != proCartHash_live) {
+                    //zeb code end 8-1-2019
 
                 carecartJquery.ajax({
                     url: apiBaseUrl + "/api/cart/store-front/create",
@@ -390,16 +404,23 @@ function AbandonedCart() {
                                     } else {
                                         customer.email = email;
                                         abandonedCart.process(1, function () {
-                                            carecartJquery('form[action="/cart/add"]').submit();
+                                            //zeb 8-1-2019
+                                            if(isAjax == 0) {
+                                                carecartJquery('form[action="/cart/add"]').submit();
+                                            }
                                         }, 0);
                                     }
                                 });
                                 enableEmailMagnet(cartData);
                                 checkAddToCartPopup(cartData, addToCartPopUpData, callBack);
+                                //zeb 8-1-2019
+                                window.localStorage.setItem('proCartHash_cached', proCartHash_live);
+
                             }
                         }
                     }
                 });
+            }
             }
 
         });
@@ -1087,6 +1108,29 @@ function AbandonedCart() {
             carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
         });
 
+
+        //zeb 8-1-2019
+
+        var proxied = window.XMLHttpRequest.prototype.send;
+        window.XMLHttpRequest.prototype.send = function() {
+        var pointer = this
+        var intervalId = window.setInterval(function(){
+        if(pointer.readyState != 4){
+            return;
+        }
+        var url = pointer.responseURL;
+        var lastPart = url.split('/');
+        var name = lastPart[lastPart.length-1];
+        if(name == 'add.js' || name == 'change.js') {
+            isAjax = 1;
+            abandonedCart.process(0);
+            //setTimeout(function(){  carecartJquery( '.mfp-wrap' ).css('display', 'block'); }, 2000);
+        }
+        clearInterval(intervalId);
+
+        }, 1);
+            return proxied.apply(this, [].slice.call(arguments));
+        };
         carecartJquery('body').on('click', '#pn-optin-disallow-btn-text', function () {
             window.localStorage.setItem('cc-pn-subscription-popup', 'DENIED');
             window.localStorage.setItem('cc-pn-subscription-token', '');
@@ -1110,6 +1154,8 @@ function AbandonedCart() {
             console.clear();
             // console.log('add to cart clicked....');
             confirmOptIn();
+            // zeb 8-1-2019
+            isAjax = 0;
             abandonedCart.process(0);
         });
 
