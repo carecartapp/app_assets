@@ -1,4 +1,4 @@
-// proapp-js-storefront-script.js GH v.1.0.6
+// proapp-js-storefront-script.js GH v.1.0.22
 // Updated at: 09-01-2019
 
 //zeb 8-1-2019 
