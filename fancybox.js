@@ -1,5 +1,5 @@
 // ==================================================
-// GH 1.0.1
+// GH v.1.1.1
 // fancyBox v3.5.2
 //
 // Licensed GPLv3 for open source use
