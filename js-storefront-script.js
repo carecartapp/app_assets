@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.0.12
+// js-storefront-script.js GH v.1.0.22
 // Updated at: 01-01-2019
 var isAjax = 0;
 function getQueryParameters() {
