@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.1.3
+// js-storefront-script.js GH v.1.1.4
 // Updated at: 20-12-2018
 var isAjax = 0;
 var isCartLoading = 0;
@@ -87,9 +87,7 @@ function AbandonedCart() {
 
 
                 if((new RegExp("cc-preview-email-collector=yes")).test(window.location.href)){
-                    showAddToCartPopup(addToCartPopUpData, function () {
-                        carecartJquery('#cc-atcp-table', 'body').show();
-                    });
+                    checkAddToCartPopup(null, null, function(){}, '');
                 }
 
 
