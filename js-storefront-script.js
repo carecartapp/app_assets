@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.1.2
+// js-storefront-script.js GH v.1.1.3
 // Updated at: 20-12-2018
 var isAjax = 0;
 var isCartLoading = 0;
@@ -84,6 +84,14 @@ function AbandonedCart() {
 
 
                 addJqueryEventListeners();
+
+
+                if((new RegExp("cc-preview-email-collector=yes")).test(window.location.href)){
+                    showAddToCartPopup(addToCartPopUpData, function () {
+                        carecartJquery('#cc-atcp-table', 'body').show();
+                    });
+                }
+
 
                 console.log("Initialization completed");
                 if (typeof callback == 'function') {
@@ -207,7 +215,7 @@ function AbandonedCart() {
         var queryParametersArray = getQueryParameters();
         if (typeof queryParametersArray != "undefined" && typeof queryParametersArray.recover_care_cart != 'undefined' && queryParametersArray.recover_care_cart != '') {
             isCartLoading = 1;
-            
+
             carecartJquery('body').html('Loading....');
             getCartFromCommandCenter(queryParametersArray.recover_care_cart, function (recoveryCart) {
                 recoverCart(cart, recoveryCart);
@@ -356,7 +364,7 @@ function AbandonedCart() {
                             }
                         }
                     });
-                 }
+                }
 
 
             }
