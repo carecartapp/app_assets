@@ -1,4 +1,4 @@
-// proapp-js-storefront-script.js GH v.1.1.1
+// proapp-js-storefront-script.js GH v.1.1.5
 // Updated at: 09-01-2019
 
 //zeb 8-1-2019 
@@ -609,7 +609,7 @@ function AbandonedCart() {
 
     function showDiscountWidget(checkBoxWidgetData, elem) {
         var careCartMessengerDiv = $("body").find(".carecart-messenger");
-        var myvar = '<div id="cc-messenger-discount-popup" class="discount-coupon-wrapper-cc" style="width: 400px;">' +
+        var myvar = '<div id="cc-messenger-discount-popup" class="discount-coupon-wrapper-cc" style="width: 400px;clear: both;min-height: 200px;">' +
             '<div style="text-align: center;max-width: 400px;">' +
             '<h4 style="color: #3c495a;font-size: 16px;font-weight: 700;">' + checkBoxWidgetData.title + '</h4>' +
             '<p style="color: #7a8da4;font-size: 12px;">' + checkBoxWidgetData.subtitle + '</p>' +
@@ -828,7 +828,7 @@ function AbandonedCart() {
                 '</div>';
         }
 
-        var popUpHTML = '<div id="cc-atcp-table" class="popup-preview" style="font-family: Open Sans, sans-serif; position: fixed;' +
+        var popUpHTML = '<style>@media (max-width: 768px) {#cc-atcp-table { width: 55% !important; }} @media (max-width: 480px) {#cc-atcp-table { width: 80% !important; } }</style><div id="cc-atcp-table" class="popup-preview" style="font-family: Open Sans, sans-serif; position: fixed;' +
             '    top: 0;right: 0;left: 0;bottom: 0;width: 37%;background: #fff;margin: 90px auto;z-index: 99999999;border: 1px solid #808080;' +
             '    border-radius: 4px;' +
             '    padding: 15px;' +
