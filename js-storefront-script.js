@@ -898,7 +898,11 @@ function AbandonedCart() {
             //run function//
             //console.log(data.email);
             if (data != null && data == 'close_email') {
-                carecartJquery('#cc-atcp-table', 'body').hide();
+                if (getParameterByName('cc-preview-email-collector')) {
+                }
+                else {
+                    carecartJquery('#cc-atcp-table', 'body').hide();
+                }
             }
             if (data.email != null) {
                 customer.email = data.email;
@@ -908,7 +912,11 @@ function AbandonedCart() {
                         carecartJquery('form[action="/cart/add"]').submit();
                     }
                 });
-                carecartJquery('#cc-atcp-table', 'body').hide();
+                if (getParameterByName('cc-preview-email-collector')) {
+                }
+                else {
+                    carecartJquery('#cc-atcp-table', 'body').hide();
+                }
             }
             if (data == 'mobilefocus') {
                 if (carecartJquery('.fancybox-content').width() <= 450) {
