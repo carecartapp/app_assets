@@ -856,7 +856,7 @@ return decodeURIComponent(results[2].replace(/\+/g, " "));
 
             carecartJquery.ajax({
 
-                url: apiBaseUrl + "/api/cart/popupSettings?store[domain]="+store.domain,
+                url: apiBaseUrl + "/api/cart/popupSettings?shop="+store.domain,
 
                 dataType: 'json',
 
