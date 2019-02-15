@@ -405,7 +405,9 @@ function AbandonedCart() {
     }
 
     function checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface) {
-
+        if (getParameterByName('cc-preview-email-collector')) {
+            return;
+        }
         if (cartData && !cartData.email && cartData.item_count != 0) {
             if (addToCartPopUpData && addToCartPopUpData.is_active && addToCartPopUpData.is_active != 0) {
 
@@ -839,17 +841,48 @@ function AbandonedCart() {
 
             carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
         });
+        
+        if (getParameterByName('cc-preview-email-collector')) {
+
+            carecartJquery.ajax({
+
+                url: apiBaseUrl + "/api/cart/popupSettings?store[domain]="+store.domain,
+
+                dataType: 'json',
+
+                type: 'GET',
+
+                success: function (response) {
+
+                var addToCartPopUpData = response.records.addToCartPopUp;
+
+                showProAddToCartPopup(addToCartPopUpData, function () {
+
+                carecartJquery('#cc-atcp-table', 'body').show();
+
+            });
+
+            }
+
+            });
+
+        }
 
         carecartJquery('body').on('click', '#cc_f-p-preview-email-btn', function () {
-            carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
-            var email = carecartJquery('#cc_f-p-preview-email-placeholder', 'body').val();
-            if (!validateEmail(email)) {
-                carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').show();
-            } else {
-                customer.email = email;
-                abandonedCart.process(1, function () {
-                    carecartJquery('form[action="/cart/add"]').submit();
-                });
+             if (getParameterByName('cc-preview-email-collector')) {
+                carecartJquery('#cc-atcp-table', 'body').hide();
+             }
+            else {
+                carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
+                var email = carecartJquery('#cc_f-p-preview-email-placeholder', 'body').val();
+                if (!validateEmail(email)) {
+                    carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').show();
+                } else {
+                    customer.email = email;
+                    abandonedCart.process(1, function () {
+                        carecartJquery('form[action="/cart/add"]').submit();
+                    });
+                }
             }
         });
 
