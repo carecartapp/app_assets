@@ -899,6 +899,7 @@ function AbandonedCart() {
             //console.log(data.email);
             if (data != null && data == 'close_email') {
                 if (getParameterByName('cc-preview-email-collector')) {
+                    carecartJquery('#cc-atcp-table', 'body').show();
                 }
                 else {
                     carecartJquery('#cc-atcp-table', 'body').hide();
@@ -913,6 +914,7 @@ function AbandonedCart() {
                     }
                 });
                 if (getParameterByName('cc-preview-email-collector')) {
+                     carecartJquery('#cc-atcp-table', 'body').show();
                 }
                 else {
                     carecartJquery('#cc-atcp-table', 'body').hide();
