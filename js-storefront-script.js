@@ -356,7 +356,9 @@ function AbandonedCart() {
                                 }
 
                                 checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface);
-                                enableEmailMagnet(cartData);
+                                if(Shopify.shop!='shophaya.myshopify.com' && Shopify.shop!='wtn-store.myshopify.com'){
+                                    enableEmailMagnet(cartData);
+                                }
 
                                 window.localStorage.setItem('cartHash_cached', cartHash_live);
                             }
