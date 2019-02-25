@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.1.4
+// js-storefront-script.js GH v.1.1.5
 // Updated at: 20-12-2018
 var isAjax = 0;
 var isCartLoading = 0;
@@ -356,10 +356,7 @@ function AbandonedCart() {
                                 }
 
                                 checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface);
-                                if(Shopify.shop!='shophaya.myshopify.com' && Shopify.shop!='wtn-store.myshopify.com'){
-                                    enableEmailMagnet(cartData);
-                                }
-
+                                enableEmailMagnet(cartData);
                                 window.localStorage.setItem('cartHash_cached', cartHash_live);
                             }
                         }
@@ -376,6 +373,11 @@ function AbandonedCart() {
     function enableEmailMagnet(cartData) {
         if (cartData && !cartData.email) {
             carecartJquery(document).on('blur', 'input', function (e) {
+
+                if(!e.originalEvent.isTrusted){
+                    return false;
+                }
+                
                 if ($(this).attr('id') == 'cc_f-p-preview-email-placeholder') {
                     return false;
                 }
@@ -823,16 +825,16 @@ function AbandonedCart() {
     function closeDiscountSpinnerPopup() {
         carecartJquery('#cc-spinner-body').remove();
     }
-    
+
     function getParameterByName(name, url) {
-if (!url) url = window.location.href;
-name = name.replace(/[\[\]]/g, "\\$&");
-var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-results = regex.exec(url);
-if (!results) return null;
-if (!results[2]) return '';
-return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
 
     function addJqueryEventListeners() {
@@ -853,7 +855,7 @@ return decodeURIComponent(results[2].replace(/\+/g, " "));
 
             carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
         });
-        
+
         if (getParameterByName('cc-preview-email-collector')) {
 
             carecartJquery.ajax({
@@ -866,24 +868,24 @@ return decodeURIComponent(results[2].replace(/\+/g, " "));
 
                 success: function (response) {
 
-                var addToCartPopUpData = response.records.addToCartPopUp;
+                    var addToCartPopUpData = response.records.addToCartPopUp;
 
-                showProAddToCartPopup(addToCartPopUpData, function () {
+                    showProAddToCartPopup(addToCartPopUpData, function () {
 
-                carecartJquery('#cc-atcp-table', 'body').show();
+                        carecartJquery('#cc-atcp-table', 'body').show();
 
-            });
+                    });
 
-            }
+                }
 
             });
 
         }
 
         carecartJquery('body').on('click', '#cc_f-p-preview-email-btn', function () {
-             if (getParameterByName('cc-preview-email-collector')) {
+            if (getParameterByName('cc-preview-email-collector')) {
                 carecartJquery('#cc-atcp-table', 'body').hide();
-             }
+            }
             else {
                 carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
                 var email = carecartJquery('#cc_f-p-preview-email-placeholder', 'body').val();
@@ -926,7 +928,7 @@ return decodeURIComponent(results[2].replace(/\+/g, " "));
                     }
                 });
                 if (getParameterByName('cc-preview-email-collector')) {
-                     carecartJquery('#cc-atcp-table', 'body').show();
+                    carecartJquery('#cc-atcp-table', 'body').show();
                 }
                 else {
                     carecartJquery('#cc-atcp-table', 'body').hide();
