@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.1.5
-// Updated at: 20-12-2018
+// js-storefront-script.js GH v.1.2.2
+// Updated at: 25-02-2019
 var isAjax = 0;
 var isCartLoading = 0;
 function getQueryParameters() {
