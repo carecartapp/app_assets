@@ -894,7 +894,7 @@ function AbandonedCart() {
                 } else {
                     customer.email = email;
                     abandonedCart.process(1, function () {
-                        if(carecartJquery('form[action="/cart/add"]').length) {
+                        if(carecartJquery('form[action="/cart/add"]').length  && window.location.pathname != '/cart') {
                             carecartJquery('form[action="/cart/add"]').submit();
                         }
                     });
@@ -926,7 +926,7 @@ function AbandonedCart() {
                 //console.log(customer.email);
                 abandonedCart.process(1, function () {
                     if (isAjax == 0) {
-                        if(carecartJquery('form[action="/cart/add"]').length) {
+                        if(carecartJquery('form[action="/cart/add"]').length && window.location.pathname != '/cart') {
                             carecartJquery('form[action="/cart/add"]').submit();
                         }
                     }
