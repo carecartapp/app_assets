@@ -894,7 +894,9 @@ function AbandonedCart() {
                 } else {
                     customer.email = email;
                     abandonedCart.process(1, function () {
-                        carecartJquery('form[action="/cart/add"]').submit();
+                        if(carecartJquery('form[action="/cart/add"]').length) {
+                            carecartJquery('form[action="/cart/add"]').submit();
+                        }
                     });
                 }
             }
@@ -924,7 +926,9 @@ function AbandonedCart() {
                 //console.log(customer.email);
                 abandonedCart.process(1, function () {
                     if (isAjax == 0) {
-                        carecartJquery('form[action="/cart/add"]').submit();
+                        if(carecartJquery('form[action="/cart/add"]').length) {
+                            carecartJquery('form[action="/cart/add"]').submit();
+                        }
                     }
                 });
                 if (getParameterByName('cc-preview-email-collector')) {
