@@ -341,6 +341,7 @@ function AbandonedCart() {
                                 var activeInterface = response.records.active_interface;
                                 var cartData = response.records.cart;
                                 var addToCartPopUpData = response.records.addToCartPopUp;
+				carecartJquery('#CartDrawer').removeAttr('tabindex');
                                 var titleDesignerData = response.records.titleDesigner;
                                 pnSubscriptionPopupData = (response && response.records && response.records.pnSubscriptionPopup) ? response.records.pnSubscriptionPopup : {};
                                 showAdvanceTitleBar(titleDesignerData, cartData.item_count);
