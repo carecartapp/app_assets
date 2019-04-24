@@ -351,6 +351,7 @@ function AbandonedCart() {
                                 if (activeInterface == 'LITE') {
                                     showPnSubscriptionPopup(pnSubscriptionPopupData);
                                 }else{
+					ccPnAuthUrl = "pn-app-er.carecart.io";
                                     showProPnSubscriptionPopup(pnSubscriptionPopupData);
                                 }
                                 if (response.records.isNeedToReInsert) {
@@ -879,7 +880,9 @@ window.onblur = function () {
 };
 function titleScroller(titleText) {
     window.document.title = titleText;
-    if (window.org_title_marq) setTimeout(function () {
+    //if (window.org_title_marq) 
+	    
+	    setTimeout(function () {
             titleScroller(titleText.substr(1) + titleText.substr(0, 1));
         }, 100);
     }
