@@ -1,5 +1,5 @@
 // js-storefront-script.js GH v.1.2.2
-// Updated at: 15-04-2019
+// Updated at: 24-04-2019
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -47,6 +47,8 @@ function AbandonedCart() {
     var apiBaseUrl = "https://app-er.carecart.io";
     var ccPnAuthUrl = "pn.carecart.io";
     var pnSubscriptionPopupData = {};
+    var pnChildWindowData = {};
+    var isImpressionCapturedByPushNotification = false;
     var isImpressionCapturedByEmailCollector = false;
 
     this.init = function (callback, callbackArgs) {
@@ -341,11 +343,16 @@ function AbandonedCart() {
                                 var activeInterface = response.records.active_interface;
                                 var cartData = response.records.cart;
                                 var addToCartPopUpData = response.records.addToCartPopUp;
-				carecartJquery('#CartDrawer').removeAttr('tabindex');
-                                var titleDesignerData = response.records.titleDesigner;
+				                var titleDesignerData = response.records.titleDesigner;
+                                carecartJquery('#CartDrawer').removeAttr('tabindex');
                                 pnSubscriptionPopupData = (response && response.records && response.records.pnSubscriptionPopup) ? response.records.pnSubscriptionPopup : {};
+                                pnChildWindowData = (response && response.records && response.records.pnSubscriptionPopupChildWindow) ? response.records.pnSubscriptionPopupChildWindow : {};
                                 showAdvanceTitleBar(titleDesignerData, cartData.item_count);
-                                showPnSubscriptionPopup(pnSubscriptionPopupData);
+                                if (activeInterface == 'LITE') {
+                                    showPnSubscriptionPopup(pnSubscriptionPopupData);
+                                }else{
+                                    showProPnSubscriptionPopup(pnSubscriptionPopupData);
+                                }
                                 if (response.records.isNeedToReInsert) {
                                     recoverCart(undefined, cartData);
                                 }
@@ -417,6 +424,18 @@ function AbandonedCart() {
     }
 
     function checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface) {
+        var previousCachedTime = window.localStorage.getItem('timeData');
+        if(previousCachedTime!==undefined){
+            var currentTime = new Date();
+            var previousTime = new Date(previousCachedTime);
+            var msec = parseInt(currentTime - previousTime);
+            var mins = parseInt(Math.floor(msec / 60000));
+            if(mins<=5){
+                console.log('Time remaining : '+ mins);
+                return;
+            }
+        }
+
         if (getParameterByName('cc-preview-email-collector')) {
             return;
         }
@@ -747,6 +766,78 @@ function AbandonedCart() {
         }
     }
 
+function showProPnSubscriptionPopup(popupData) {
+
+    var popupStatus = window.localStorage.getItem('cc-pn-subscription-popup');
+    if (popupStatus) {
+        return false;
+    }
+
+    if (popupData && popupData.popup_is_active && popupData.popup_is_active == 1) {
+
+            populateOptinPopupPreview(popupData, function (preparedHtml) {
+                if (isImpressionCapturedByPushNotification == false) {
+                        isImpressionCapturedByPushNotification = true;
+                        setTimeout(function () {
+                            carecartJquery('body').append(preparedHtml);
+                            if (popupData.appearance_location == 'TOP_CENTER') {
+                                carecartJquery('#cc_pn_notification_template').css({
+                                    'top': '5px',
+                                    'left': '37%'
+                                });
+                            } else if (popupData.appearance_location == 'TOP_LEFT') {
+                                carecartJquery('#cc_pn_notification_template').css({
+                                    'top': '5px',
+                                    'left': '5px'
+                                });
+                            } else if (popupData.appearance_location == 'TOP_RIGHT') {
+                                carecartJquery('#cc_pn_notification_template').css({
+                                    'top': '5px',
+                                    'right': '15px'
+                                });
+                            } else if (popupData.appearance_location == 'BOTTOM_RIGHT') {
+                                carecartJquery('#cc_pn_notification_template').css({
+                                    'bottom': '0px',
+                                    'right': '15px'
+                                });
+                            }
+                        }, popupData.popup_delay_in_seconds + '000');
+
+                    abandonedCart.process(0, '', 0, 'PUSH_NOTIFICATION ');
+                }
+            });
+    }
+}
+
+function populateOptinPopupPreview(popupData, callback) {
+
+        var popupTitle = popupData.popup_title;
+        var popupDescription = popupData.popup_description_text;
+        var popupAllowButtonText = popupData.popup_allow_button_text;
+        var popupDisAllowButtonText = popupData.popup_disallow_button_text;
+        var popupLogoUrl = popupData.popup_logo_public_url || apiBaseUrl + '/img/push-not--pop.png';
+        var appearanceLocation = popupData.appearance_location;
+        var isPoweredByTextStatus = popupData.is_active_powered_by;
+        var popupDelay = popupData.popup_delay_in_seconds;
+
+
+        var tmplHtml = popupData.pn_subscription_popup_template.html;
+
+        var preparedHtml = tmplHtml.replace('{CC-PN-POWERED-BY-IMG}', apiBaseUrl + '/img/logo.png');
+        var preparedHtml = preparedHtml.replace('{CC-PN-SP-IMAGE}', popupLogoUrl);
+        var preparedHtml = preparedHtml.replace('{CC-PN-SP-TITLE}', popupTitle);
+        var preparedHtml = preparedHtml.replace('{CC-PN-SP-DESCRIPTION}', popupDescription);
+        var preparedHtml = preparedHtml.replace('{CC-PN-SP-ALLOW-BUTTON-TEXT}', popupAllowButtonText);
+        var preparedHtml = preparedHtml.replace('{CC-PN-SP-DISALLOW-BUTTON-TEXT}', popupDisAllowButtonText);
+        var preparedHtml = preparedHtml.replace('{CC-PN-SP-BRANDED-TEXT-STATUS}', (isPoweredByTextStatus == 1) ? 'block' : 'none');
+
+        if (typeof callback == 'function') callback(preparedHtml);
+
+        };
+
+
+
+
 function showAdvanceTitleBar(data, itemCount) {
     scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
         if (getParameterByName('cc-show-title-designer')) {
@@ -860,7 +951,8 @@ favicon.badge(itemCount);
         });
 
         carecartJquery('body').on('click', '#cc_f-p-close', function (e) {
-
+            var timeNow = new Date();
+            window.localStorage.setItem('timeData', timeNow);
             carecartJquery('#cc-atcp-table', 'body').hide();
         });
 
@@ -913,6 +1005,18 @@ favicon.badge(itemCount);
                     });
                 }
             }
+        });
+
+        carecartJquery('body').on('click', '#pn-optin-disallow-btn-text', function () {
+            window.localStorage.setItem('cc-pn-subscription-popup', 'DENIED');
+            window.localStorage.setItem('cc-pn-subscription-token', '');
+            carecartJquery('#cc_pn_notification_template').hide();
+        });
+        carecartJquery('body').on('click', '#pn-optin-allow-btn-text', function () {
+            var prepareDataForChildWindow = encodeURIComponent(JSON.stringify(pnChildWindowData));
+            var permissionViewLink = 'https://' + ccPnAuthUrl + '/getPnToken?cc_pn_lp=' + prepareDataForChildWindow + '&shop=' + store.domain;
+            var permissionPopup = openPermissionTab(permissionViewLink, store.domain, '400px', '400px');
+            carecartJquery('#cc_pn_notification_template').hide();
         });
 
         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
