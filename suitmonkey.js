@@ -606,10 +606,7 @@ function AbandonedCart() {
             '    top: 0;right: 0;left: 0;bottom: 0;width: 37%;background: #000;margin: 90px auto;z-index: 99999999;border: 2px solid #ba9a56;' +
             '    border-radius: 4px;' +
             '    padding: 15px;' +
-            '    box-shadow: 0 0 20px 10px #f5f5f5;' +
-            '    -moz-box-shadow: 0 0 20px 10px #f5f5f5;' +
-            '    -webkit-box-shadow: 0 0 20px 10px #f5f5f5;' +
-            '    -o-box-shadow: 0 0 20px 10px #f5f5f5;max-height:400px;">' +
+            '    max-height:400px;">' +
             closeButton +
             '                                                                <div class="img-cart-top"><img id="ec-banner"' +
             ' src="' + bannerImageURl + '" ' +
