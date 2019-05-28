@@ -40,11 +40,12 @@ function AbandonedCart() {
 
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.2.9/';
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
-        cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css");
-        scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
+        cssFileInjection(scriptBuildUrl+"cc.sweetalert2.css");
+        scriptInjection(scriptBuildUrl+"cc.sweetalert2.all.js");
             window.carecartJquery = jQuery.noConflict(true);
                 if (carecartJquery('#care-cart-customer-information').length == 0 || carecartJquery('#care-cart-shop-information').length == 0) {
                     var storeData = {};
@@ -130,12 +131,12 @@ function AbandonedCart() {
             }
             //console.log(abandonedCart.globalSettingsAndData);
             if(abandonedCart.globalSettingsAndData.titleDesigner.length>0){
-                scriptInjection(apiBaseUrl+"/js/api/cartReminderScript.js?v1.0.6");
+                scriptInjection(scriptBuildUrl+"cartReminderScript.js");
             }
             if(abandonedCart.globalSettingsAndData.pnSubscriptionPopup.length>0){
-                scriptInjection(apiBaseUrl+"/js/api/pushNotificationsScript.js?v1.1.1");
+                scriptInjection(scriptBuildUrl+"pushNotificationsScript.js");
             }
-            scriptInjection(apiBaseUrl+"/js/api/cartCreateScript.js?v1.1.2");
+            scriptInjection(scriptBuildUrl+"cartCreateScript.js");
             if(abandonedCart.globalSettingsAndData.gdpr.length>0){
                 console.log(" GDPR ");
             }
