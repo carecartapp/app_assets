@@ -3,6 +3,8 @@
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
+var cartHash_cached = 0;
+var cartHash_live = 0;
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
     return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
@@ -247,7 +249,7 @@ function AbandonedCartCreateScript() {
 
     };
 
-    this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy) {
+    this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy='') {
         getCart(function (cart) {
             if (isCapturedByPopup == 1) {
                 cart.is_email_captured_by_popup = 1;
@@ -275,8 +277,8 @@ function AbandonedCartCreateScript() {
                 console.log('Recovering cart...')
             } else {
                 console.log("Update cart on command center");
-                var cartHash_cached = "1";
-                var cartHash_live = "2";
+               // var cartHash_cached = "1";
+               // var cartHash_live = "2";
                 try {
                     cartHash_cached = String(window.localStorage.getItem('cartHash_cached'));
                     cartHash_live = CryptoJS.MD5(JSON.stringify(cart)).toString();
@@ -293,6 +295,7 @@ function AbandonedCartCreateScript() {
                             async: false,
                             success: function (response) {
                                 if(response.message == "Data Received"){
+                                    window.localStorage.setItem('cartHash_cached', cartHash_live);
                                     var cartData = data.cart;
                                     var activeInterface = abandonedCart.globalSettingsAndData.active_interface;
                                     AbandonedCartCreateScript.CartItemData = cartData;
