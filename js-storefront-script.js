@@ -4,6 +4,8 @@ var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
 var isCheckForMobile = false;
+var cartHash_cached = 0;
+var cartHash_live = 0;
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -297,7 +299,7 @@ function AbandonedCart() {
 
     };
 
-    this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy) {
+    this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy='') {
 
         getCart(function (cart) {
             if (isCapturedByPopup == 1) {
@@ -329,8 +331,8 @@ function AbandonedCart() {
             } else {
                 console.log("Update cart on command center");
 
-                var cartHash_cached = "1";
-                var cartHash_live = "2";
+                //var cartHash_cached = "1";
+               // var cartHash_live = "2";
 
                 try {
                     cartHash_cached = String(window.localStorage.getItem('cartHash_cached'));
@@ -338,8 +340,8 @@ function AbandonedCart() {
                 } catch (e) {
                 }
 
-                if (cartHash_cached != cartHash_live || impressionBy != '') {
-		if(isCheckForCall){
+                if ((cartHash_cached != cartHash_live || impressionBy != '') && data.cart.item_count > 0) {
+		        if(isCheckForCall){
 
                         isCheckForCall = false;
 
@@ -352,6 +354,7 @@ function AbandonedCart() {
                         success: function (response) {
                         isCheckForCall = true;
                             if (response._metadata.outcomeCode == 0 && response.records.cart) {
+                                window.localStorage.setItem('cartHash_cached', cartHash_live);
                                 var activeInterface = response.records.active_interface;
                                 var cartData = response.records.cart;
                                 var addToCartPopUpData = response.records.addToCartPopUp;
