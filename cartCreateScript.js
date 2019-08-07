@@ -286,7 +286,7 @@ function AbandonedCartCreateScript() {
                 }
                if ((cartHash_cached != cartHash_live || impressionBy != '') && data.cart.item_count > 0) {
                     carecartJquery.ajax({
-                            url: "https://app-er-microservices.carecart.io/Cart/create",
+                            url: "https://tracking.carecart.io/Cart/create",
                             dataType: 'json',
                             type: 'POST',
                             data: data,
