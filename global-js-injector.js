@@ -40,7 +40,7 @@ function AbandonedCart() {
 
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.3.9/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.2/';
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
@@ -113,7 +113,7 @@ function AbandonedCart() {
 
             if(abandonedCart.globalSettingsAndData===undefined || abandonedCart.globalSettingsAndData.length==0){ 
                   carecartJquery.ajax({
-                        url: "https://app-er-microservices.carecart.io/index.php/General/settings?shop="+Shopify.shop,
+                        url: "https://tracking.carecart.io/index.php/General/settings?shop="+Shopify.shop,
                         dataType: 'json',
                         type: 'GET',
                         data: {},
