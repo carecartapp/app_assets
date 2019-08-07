@@ -113,10 +113,10 @@ function AbandonedCart() {
 
             if(abandonedCart.globalSettingsAndData===undefined || abandonedCart.globalSettingsAndData.length==0){ 
                   carecartJquery.ajax({
-                        url: "https://app-er-microservices.carecart.io/index.php/General/settings?shop="+data.store.domain,
+                        url: "https://app-er-microservices.carecart.io/index.php/General/settings?shop="+Shopify.shop,
                         dataType: 'json',
                         type: 'GET',
-                        data: data,
+                        data: {},
                         crossDomain: true,
                         async: false,
                         success: function (response) {
