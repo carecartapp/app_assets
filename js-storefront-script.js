@@ -1201,6 +1201,7 @@ favicon.badge(itemCount);
         window.localStorage.setItem('cc-pn-subscription-popup', subsStatus);
         window.localStorage.setItem('cc-pn-subscription-token', fcmToken);
         carecartJquery('#cc-pn-table').hide();
+	window.localStorage.setItem('cartHash_cached', '');
         abandonedCart.process(0);
 
         return;
