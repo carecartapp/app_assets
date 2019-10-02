@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.0
-// Updated at: 09-05-2019
+// js-storefront-script.js GH v.1.4.4
+// Updated at: 02-10-2019
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -40,7 +40,7 @@ function AbandonedCart() {
 
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.3/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.4/';
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
