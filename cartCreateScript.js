@@ -1,4 +1,4 @@
-// js-storefront-script.js GH v.1.4.3
+// js-storefront-script.js GH v.1.4.4
 // Updated at: 02-10-2019
 var isAjax = 0;
 var isCartLoading = 0;
