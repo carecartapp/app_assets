@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.10
-// Updated at: 20-12-2018
+// js-storefront-script.js GH v.1.4.4
+// Updated at: 02-10-2019
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -86,7 +86,8 @@ function CartReminderScript() {
             window.org_title = window.document.title;
             window.org_title_marq = 0;
 
-            carecartJquery('body').on('mouseleave', function (e) {
+            //carecartJquery('body').on('mouseleave', function (e) {
+            setTimeout(function (e) {
                 //console.log('mousemove');
                 if (window.cc_adv_title_timer > 0) {
                     clearTimeout(window.cc_adv_title_timer);
@@ -98,7 +99,7 @@ function CartReminderScript() {
                     window.org_title_marq = 1;
                     titleScroller(data.title_bar_text + '\u00A0\u00A0\u00A0\u00A0\u00A0');
                 }, delayIntervalInSeconds);
-            });
+            }, 5000);
         }
         window.onblur = function () {
 
