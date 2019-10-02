@@ -1,5 +1,5 @@
-// js-storefront-script.js GH v.1.0.10
-// Updated at: 20-12-2018
+// js-storefront-script.js GH v.1.4.3
+// Updated at: 02-10-2019
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -314,7 +314,13 @@ function AbandonedCartCreateScript() {
                                 }
                             }
                     });
-                }
+                }else if(data.cart.item_count > 0){
+                   AbandonedCartCreateScript.titleDesignerData = abandonedCart.globalSettingsAndData.titleDesigner;
+                   if(abandonedCart.globalSettingsAndData.titleDesigner.length>0){
+                       CartReminderScript.showAdvanceTitleBar( AbandonedCartCreateScript.titleDesignerData ,data.cart.item_count);
+                   }
+
+               }
             }
         });
     };
