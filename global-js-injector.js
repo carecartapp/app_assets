@@ -1,5 +1,6 @@
-// js-storefront-script.js GH v.1.4.4
-// Updated at: 02-10-2019
+// global-js-injector GH v.1.4.6
+// Updated at: 18-02-2020
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.6/
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -40,12 +41,13 @@ function AbandonedCart() {
 
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.4/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.6/';
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
         cssFileInjection(scriptBuildUrl+"cc.sweetalert2.css");
         scriptInjection(scriptBuildUrl+"cc.sweetalert2.all.js");
+        scriptInjection(scriptBuildUrl+"front-store-spinner.js");
             window.carecartJquery = jQuery.noConflict(true);
                 if (carecartJquery('#care-cart-customer-information').length == 0 || carecartJquery('#care-cart-shop-information').length == 0) {
                     var storeData = {};
