@@ -2,7 +2,7 @@
 
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.6/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.7/';
 
     var dataSpin = false;
 
@@ -38,7 +38,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    cssFileInjection(API_URL + "public/app/css/front-store-spinner.css");
+    cssFileInjection(API_URL + "public/app/css/front-store-spinner.css?v="+time());
 
     setTimeout(function () {
         scriptInjection(CDN_URL + "spinner.js", function () {
@@ -773,7 +773,7 @@
                     var msec = parseInt(currentTime - previousTime);
                     var minutes = parseInt(Math.floor(msec / 60000));
                     console.log(' Time : ' + minutes);
-                    if (minutes <= 2) {
+                    if (minutes <= 30) {
                         return false;
                     }
 
