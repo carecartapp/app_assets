@@ -1,4 +1,4 @@
-// global-js-injector GH v.1.4.6
+// global-js-injector GH v.1.4.7
 // Updated at: 18-02-2020
 // https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.7/
 
