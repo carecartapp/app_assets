@@ -38,7 +38,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    cssFileInjection(API_URL + "public/app/css/front-store-spinner.css?v="+time());
+    cssFileInjection(API_URL + "public/app/css/front-store-spinner.css");
 
     setTimeout(function () {
         scriptInjection(CDN_URL + "spinner.js", function () {
