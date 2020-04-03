@@ -2,7 +2,7 @@
 
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.4.9/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.0/';
 
     var dataSpin = false;
 
@@ -38,10 +38,10 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    cssFileInjection(API_URL + "public/app/css/front-store-spinner.css?v=1.0");
+    cssFileInjection(CDN_URL +"front-store-spinner.css?v=1.5.0");
 
     setTimeout(function () {
-        scriptInjection(CDN_URL + "spinner.js", function () {
+        scriptInjection(CDN_URL + "spinner.js?v=1.5.0", function () {
 
 
             function Spin2WinWheel() {
@@ -418,32 +418,32 @@
             }
 
             function myGameEnd(i) {
-                var t = $(".winContainer"),
-                    l = $(".loseContainer"),
-                    e = $(".signupContainer"),
-                    n = $(".win_text"),
-                    a = $(".coupon");
+                var t = carecartJquery(".winContainer"),
+                    l = carecartJquery(".loseContainer"),
+                    e = carecartJquery(".signupContainer"),
+                    n = carecartJquery(".win_text"),
+                    a = carecartJquery(".coupon");
 
                 postSubscribersInformation(i.results[0].userData.coupon, i.results[0].msg)
                 window.localStorage.setItem('cc-sas-spinner-cached-coupon-code', i.results[0].userData.coupon);
                 window.localStorage.setItem('cc-sas-spinner-cached-coupon-code-message', i.results[0].msg);
                 if (i.results[0].userData.coupon) {
                     e.fadeOut(), n.text(i.results[0].msg), a.text(i.results[0].userData.coupon), t.find("input").val(i.results[0].userData.coupon), t.css({
-                        paddingTop: ($(window).height() - t.height()) / 2
+                        paddingTop: (carecartJquery(window).height() - t.height()) / 2
                     }),
-                        $(window).resize(function () {
+                        carecartJquery(window).resize(function () {
                             t.css({
-                                // paddingTop: ($(window).height() - t.height()) / 2
+                                // paddingTop: (carecartJquery(window).height() - t.height()) / 2
                             })
                         }),
                         t.fadeIn()
                 } else {
                     e.fadeOut(), n.text(i.results[0].msg), t.css({
-                        paddingTop: ($(window).height() - t.height()) / 2
+                        paddingTop: (carecartJquery(window).height() - t.height()) / 2
                     }),
-                        $(window).resize(function () {
+                        carecartJquery(window).resize(function () {
                             t.css({
-                                // paddingTop: ($(window).height() - t.height()) / 2
+                                // paddingTop: (carecartJquery(window).height() - t.height()) / 2
                             })
                         }),
                         l.fadeIn()
@@ -451,29 +451,29 @@
 
             }
             function myGameEndTest(i) {
-                var t = $(".winContainer"),
-                    l = $(".loseContainer"),
-                    e = $(".signupContainer"),
-                    n = $(".win_text"),
-                    a = $(".coupon");
+                var t = carecartJquery(".winContainer"),
+                    l = carecartJquery(".loseContainer"),
+                    e = carecartJquery(".signupContainer"),
+                    n = carecartJquery(".win_text"),
+                    a = carecartJquery(".coupon");
 
                 if (i.results[0].userData.coupon) {
                     e.fadeOut(), n.text(i.results[0].msg), a.text(i.results[0].userData.coupon), t.find("input").val(i.results[0].userData.coupon), t.css({
-                        paddingTop: ($(window).height() - t.height()) / 2
+                        paddingTop: (carecartJquery(window).height() - t.height()) / 2
                     }),
-                        $(window).resize(function () {
+                        carecartJquery(window).resize(function () {
                             t.css({
-                                // paddingTop: ($(window).height() - t.height()) / 2
+                                // paddingTop: (carecartJquery(window).height() - t.height()) / 2
                             })
                         }),
                         t.fadeIn()
                 } else {
                     e.fadeOut(), n.text(i.results[0].msg), t.css({
-                        paddingTop: ($(window).height() - t.height()) / 2
+                        paddingTop: (carecartJquery(window).height() - t.height()) / 2
                     }),
-                        $(window).resize(function () {
+                        carecartJquery(window).resize(function () {
                             t.css({
-                                // paddingTop: ($(window).height() - t.height()) / 2
+                                // paddingTop: (carecartJquery(window).height() - t.height()) / 2
                             })
                         }),
                         l.fadeIn()
@@ -498,7 +498,7 @@
 
             function applySASPlugin() {
                 function i() {
-                    var i = $(window).width();
+                    var i = carecartJquery(window).width();
                     i < 680 && (t.css({
                         width: "100%",
                         padding: 0
@@ -520,30 +520,30 @@
                     })), i < 400 && e.css({
                         bottom: "-23%"
                     }), i >= 680 && t.css({
-                        paddingTop: ($(window).height() - t.height()) / 2
+                        paddingTop: (carecartJquery(window).height() - t.height()) / 2
                     })
                 }
 
-                var t = $(".signupContainer"),
-                    v = $(".winContainer"),
-                    e = $(".wheelContainer"),
-                    n = $(".wheelSVG"),
-                    a = $(".form-group input"),
-                    o = $(".btn-submit-form"),
-                    s = $('input[name="fullname"]'),
-                    d = $('input[name="email"]'),
-                    u = $("input[name='coupon']");
-                $(".copy-button").click(function () {
-                    clipboard.writeText(u.val()), $(this).html('<i class="fa fa-clone" aria-hidden="true"></i> Copied')
-                }), i(), $(window).resize(function () {
+                var t = carecartJquery(".signupContainer"),
+                    v = carecartJquery(".winContainer"),
+                    e = carecartJquery(".wheelContainer"),
+                    n = carecartJquery(".wheelSVG"),
+                    a = carecartJquery(".form-group input"),
+                    o = carecartJquery(".btn-submit-form"),
+                    s = carecartJquery('input[name="fullname"]'),
+                    d = carecartJquery('input[name="email"]'),
+                    u = carecartJquery("input[name='coupon']");
+                carecartJquery(".copy-button").click(function () {
+                    clipboard.writeText(u.val()), carecartJquery(this).html('<i class="fa fa-clone" aria-hidden="true"></i> Copied')
+                }), i(), carecartJquery(window).resize(function () {
                     i()
                 }), o.click(function (i) {
                     i.preventDefault();
                     var t = s.val(),
                         e = d.val(),
-                        n = $(".textInfo"),
-                        a = $(".btn-submit-form"),
-                        o = $(".btn-submit-form-ok");
+                        n = carecartJquery(".textInfo"),
+                        a = carecartJquery(".btn-submit-form"),
+                        o = carecartJquery(".btn-submit-form-ok");
                     n.text("");
                     return "" == t ? (n.text("You should provide your fullname!"), n.addClass("animated shake"), void setTimeout(function () {
                         n.removeClass("animated shake")
@@ -726,8 +726,8 @@
 
 
 
-                var customerName = $('input[name="fullname"]').val();
-                var customerEmail = $('input[name="email"]').val();
+                var customerName = carecartJquery('input[name="fullname"]').val();
+                var customerEmail = carecartJquery('input[name="email"]').val();
                 var isConsent = (carecartJquery('#cc-spin-a-sale-consent-checkbox').prop('checked') == true) ? 'consent_accepted' : 'consent_rejected';
                 var couponUsed = coupon;
                 var winResult = result;
@@ -843,33 +843,34 @@
                 showSpinASaleModule(type);
                 if (!checkCachedTime()) {
 
-                    var t = $(".winContainer"),
-                        w = $(".wheelContainer"),
-                        l = $(".loseContainer"),
-                        e = $(".signupContainer"),
-                        n = $(".win_text"),
-                        a = $(".coupon");
-                    w.css('opacity','0.3');
+                    var t = carecartJquery(".winContainer"),
+                        w = carecartJquery(".wheelContainer"),
+                        l = carecartJquery(".loseContainer"),
+                        e = carecartJquery(".signupContainer"),
+                        n = carecartJquery(".win_text"),
+                        a = carecartJquery(".coupon");
+
                     var coupon = window.localStorage.getItem('cc-sas-spinner-cached-coupon-code');
                     var msg = window.localStorage.getItem('cc-sas-spinner-cached-coupon-code-message');
                     if (coupon && msg) {
                         if (coupon) {
                             e.fadeOut(), n.text(msg), a.text(coupon), t.find("input").val(coupon), t.css({
-                                paddingTop: ($(window).height() - t.height()) / 2
+                                paddingTop: (carecartJquery(window).height() - t.height()) / 2
                             }),
-                                $(window).resize(function () {
+                                carecartJquery(window).resize(function () {
                                     t.css({
-                                        // paddingTop: ($(window).height() - t.height()) / 2
+                                        // paddingTop: (carecartJquery(window).height() - t.height()) / 2
                                     })
                                 }),
                                 t.fadeIn()
+                            w.css('opacity','0.3');
                         } else {
                             e.fadeOut(), n.text(msg), t.css({
-                                paddingTop: ($(window).height() - t.height()) / 2
+                                paddingTop: (carecartJquery(window).height() - t.height()) / 2
                             }),
-                                $(window).resize(function () {
+                                carecartJquery(window).resize(function () {
                                     t.css({
-                                        // paddingTop: ($(window).height() - t.height()) / 2
+                                        // paddingTop: (carecartJquery(window).height() - t.height()) / 2
                                     })
                                 }),
                                 l.fadeIn()
@@ -957,7 +958,7 @@
                                     })
 
                                     function i() {
-                                        var i = $(window).width();
+                                        var i = carecartJquery(window).width();
                                         i < 680 && (t.css({
                                             width: "100%",
                                             padding: 0
@@ -979,30 +980,30 @@
                                         })), i < 400 && e.css({
                                             bottom: "-23%"
                                         }), i >= 680 && t.css({
-                                            paddingTop: ($(window).height() - t.height()) / 2
+                                            paddingTop: (carecartJquery(window).height() - t.height()) / 2
                                         })
                                     }
 
-                                    var t = $(".signupContainer"),
-                                        v = $(".winContainer"),
-                                        e = $(".wheelContainer"),
-                                        n = $(".wheelSVG"),
-                                        a = $(".form-group input"),
-                                        o = $(".btn-submit-form"),
-                                        s = $('input[name="fullname"]'),
-                                        d = $('input[name="email"]'),
-                                        u = $("input[name='coupon']");
-                                    $(".copy-button").click(function () {
-                                        clipboard.writeText(u.val()), $(this).html('<i class="fa fa-clone" aria-hidden="true"></i> Copied')
-                                    }), i(), $(window).resize(function () {
+                                    var t = carecartJquery(".signupContainer"),
+                                        v = carecartJquery(".winContainer"),
+                                        e = carecartJquery(".wheelContainer"),
+                                        n = carecartJquery(".wheelSVG"),
+                                        a = carecartJquery(".form-group input"),
+                                        o = carecartJquery(".btn-submit-form"),
+                                        s = carecartJquery('input[name="fullname"]'),
+                                        d = carecartJquery('input[name="email"]'),
+                                        u = carecartJquery("input[name='coupon']");
+                                    carecartJquery(".copy-button").click(function () {
+                                        clipboard.writeText(u.val()), carecartJquery(this).html('<i class="fa fa-clone" aria-hidden="true"></i> Copied')
+                                    }), i(), carecartJquery(window).resize(function () {
                                         i()
                                     }), o.click(function (i) {
                                         i.preventDefault();
                                         var t = s.val(),
                                             e = d.val(),
-                                            n = $(".textInfo"),
-                                            a = $(".btn-submit-form"),
-                                            o = $(".btn-submit-form-ok");
+                                            n = carecartJquery(".textInfo"),
+                                            a = carecartJquery(".btn-submit-form"),
+                                            o = carecartJquery(".btn-submit-form-ok");
                                         return "" == t ? (n.text("You should provide your fullname!"), n.addClass("animated shake"), void setTimeout(function () {
                                             n.removeClass("animated shake")
                                         }, 1e3)) : "" == e ? (n.text("You should provide your email"), n.addClass("animated shake"), void setTimeout(function () {
