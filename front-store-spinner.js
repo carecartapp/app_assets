@@ -2,7 +2,7 @@
 
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.0/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.1/';
 
     var dataSpin = false;
 
@@ -38,10 +38,10 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    cssFileInjection(CDN_URL +"front-store-spinner.css?v=1.5.0");
+    cssFileInjection(CDN_URL +"front-store-spinner.css?v=1.5.1");
 
     setTimeout(function () {
-        scriptInjection(CDN_URL + "spinner.js?v=1.5.0", function () {
+        scriptInjection(CDN_URL + "spinner.js?v=1.5.1", function () {
 
 
             function Spin2WinWheel() {
@@ -530,8 +530,8 @@
                     n = carecartJquery(".wheelSVG"),
                     a = carecartJquery(".form-group input"),
                     o = carecartJquery(".btn-submit-form"),
-                    s = carecartJquery('input[name="fullname"]'),
-                    d = carecartJquery('input[name="email"]'),
+                    s = carecartJquery('#cc-spinner-full-name'),
+                    d = carecartJquery('#cc-spinner-email'),
                     u = carecartJquery("input[name='coupon']");
                 carecartJquery(".copy-button").click(function () {
                     clipboard.writeText(u.val()), carecartJquery(this).html('<i class="fa fa-clone" aria-hidden="true"></i> Copied')
@@ -724,10 +724,8 @@
 
             function postSubscribersInformation(coupon = null, result = null) {
 
-
-
-                var customerName = carecartJquery('input[name="fullname"]').val();
-                var customerEmail = carecartJquery('input[name="email"]').val();
+                var customerName = carecartJquery('#cc-spinner-full-name').val();
+                var customerEmail = carecartJquery('#cc-spinner-email').val();
                 var isConsent = (carecartJquery('#cc-spin-a-sale-consent-checkbox').prop('checked') == true) ? 'consent_accepted' : 'consent_rejected';
                 var couponUsed = coupon;
                 var winResult = result;
@@ -990,8 +988,8 @@
                                         n = carecartJquery(".wheelSVG"),
                                         a = carecartJquery(".form-group input"),
                                         o = carecartJquery(".btn-submit-form"),
-                                        s = carecartJquery('input[name="fullname"]'),
-                                        d = carecartJquery('input[name="email"]'),
+                                        s = carecartJquery('#cc-spinner-full-name'),
+                                        d = carecartJquery('#cc-spinner-email'),
                                         u = carecartJquery("input[name='coupon']");
                                     carecartJquery(".copy-button").click(function () {
                                         clipboard.writeText(u.val()), carecartJquery(this).html('<i class="fa fa-clone" aria-hidden="true"></i> Copied')
