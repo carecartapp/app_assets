@@ -1,4 +1,4 @@
-// js-storefront-script GH v.1.5.0
+// js-storefront-script GH v.1.5.1
 // Updated at: 04-03-2020
 // https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.1/
 var isAjax = 0;
