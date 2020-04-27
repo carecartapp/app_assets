@@ -1,8 +1,10 @@
 (function () {
-
+    var d = new Date();
+    var version = d.getSeconds();
+    
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.1/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.2/';
 
     var dataSpin = false;
 
@@ -16,8 +18,6 @@
         }
 
         document.getElementsByTagName('head')[0].appendChild(script);
-
-
     }
 
     function cssFileInjection(href) {
@@ -803,28 +803,52 @@
             }
 
             /* Post Data to Server END */
-
+            
+            function ifCachedData(){
+                var settingsCachedTime = window.localStorage.getItem('cc-sas-spinner-ajax-cached-time');
+                var settingsCachedData = window.localStorage.getItem('cc-sas-spinner-ajax-cached-data');
+                if (settingsCachedTime !== undefined && settingsCachedTime !== null && settingsCachedData !== undefined && settingsCachedData !== null) {
+                    console.log('Settings cached data exist ');
+                    var previousTime = new Date(settingsCachedTime);
+                    var msec = parseInt(d - previousTime);
+                    var minutes = parseInt(Math.floor(msec / 60000));
+                    console.log('Settings cached Time : ' + minutes);
+                    if (minutes <= 30) {
+                        console.log('Get settings from cached data');
+                        console.log('Remaining time: '+(30-minutes));
+                        return true;
+                    }
+                }
+                return false;
+            }
             if (!getParameterByName('cc-show-spin-a-sale-test')) {
 
-                carecartJquery.ajax({
-                    url: API_URL + "store-front-api/get-store-information",
-                    type: 'GET',
-                    data: {
-                        shop: Shopify.shop,
+                 if(ifCachedData()){
+                    console.log('In Cached Data:');
+                    var cachedData = JSON.parse(window.localStorage.getItem('cc-sas-spinner-ajax-cached-data'));
+                     pupulateData(cachedData);
+                }else{
+                    carecartJquery.ajax({
+                        url: API_URL + "store-front-api/get-store-information",
+                        type: 'GET',
+                        data: {
+                            shop: Shopify.shop,
 
-                    },
-                    crossDomain: true,
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function (response) {
-                        pupulateData(response);
-                    },
-                    error: function (error) {
-                        console.log('Error in Spin A Sale request');
-                        console.log(error);
-                    }
-                });
-
+                        },
+                        crossDomain: true,
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                             window.localStorage.setItem('cc-sas-spinner-ajax-cached-time', d);
+                            window.localStorage.setItem('cc-sas-spinner-ajax-cached-data', JSON.stringify(response));
+                            pupulateData(response);
+                        },
+                        error: function (error) {
+                            console.log('Error in Spin A Sale request');
+                            console.log(error);
+                        }
+                    });
+                }
             }
 
 
