@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.5.1
-// Updated at: 04-03-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.1/
+// js-storefront-script GH v.1.5.2
+// Updated at: 27-04-2020
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.2/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -51,7 +51,7 @@ function AbandonedCart() {
     var isSupportOfWholeSale =0;
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.1/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.2/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
