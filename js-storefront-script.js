@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.5.3
+// js-storefront-script GH v.1.5.4
 // Updated at: 04-05-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.3/
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.4/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -51,7 +51,7 @@ function AbandonedCart() {
     var isSupportOfWholeSale =0;
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.3/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.4/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -73,7 +73,7 @@ function AbandonedCart() {
                 window.carecartJquery = jQuery.noConflict(true);
                 scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
                 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-                cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css");
+                cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.4");
                 scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
 		scriptInjection(scriptBuildUrl+"front-store-spinner.js");
 
