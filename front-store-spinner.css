@@ -273,8 +273,8 @@
 
 
 #spin-trigger-cc, #spin-trigger-cc:active, #spin-trigger-cc:focus, #spin-trigger-cc:hover, #spin-trigger-cc:visited {
-    bottom: 25px;
-    right: 25px;
+    bottom: 30px;
+    right: 100px;
     position: fixed;
     text-decoration: none;
     opacity: 1;
