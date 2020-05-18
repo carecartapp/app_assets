@@ -1,6 +1,6 @@
 // global-js-injector GH v.1.5.5
 // Updated at: 18-05-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.4/
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.5/
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
