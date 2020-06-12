@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.5.5
-// Updated at: 04-05-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.5/
+// js-storefront-script GH v.1.5.6
+// Updated at: 12-06-2020
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.6/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -51,7 +51,7 @@ function AbandonedCart() {
     var isSupportOfWholeSale =0;
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.5/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.6/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -73,7 +73,7 @@ function AbandonedCart() {
                 window.carecartJquery = jQuery.noConflict(true);
                 scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
                 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-                cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.4");
+                cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.6");
                 scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
 		scriptInjection(scriptBuildUrl+"front-store-spinner.js");
 
@@ -380,8 +380,9 @@ function AbandonedCart() {
                                     carecartJquery('#CartDrawer').removeAttr('tabindex');
                                     pnSubscriptionPopupData = (response && response.records && response.records.pnSubscriptionPopup) ? response.records.pnSubscriptionPopup : {};
                                     pnChildWindowData = (response && response.records && response.records.pnSubscriptionPopupChildWindow) ? response.records.pnSubscriptionPopupChildWindow : {};
-                                    showAdvanceTitleBar(titleDesignerData, cartData.item_count);
-                                    if (activeInterface == 'LITE') {
+                                    window.localStorage.setItem('cc-title-bar-cached-data', JSON.stringify(titleDesignerData));
+				    showAdvanceTitleBar(titleDesignerData, cartData.item_count);
+				    if (activeInterface == 'LITE') {
                                         showPnSubscriptionPopup(pnSubscriptionPopupData);
                                     }else{
                                         ccPnAuthUrl = "pn-app-er.carecart.io";
@@ -414,6 +415,16 @@ function AbandonedCart() {
                                 }
                             }
                         });
+                    }
+                }
+		 else{
+                    if(data.cart.item_count > 0){
+                        var titleBarCachedData = window.localStorage.getItem('cc-title-bar-cached-data');
+                        if (titleBarCachedData !== undefined && titleBarCachedData !== null) {
+                            var titleBarData = JSON.parse(window.localStorage.getItem('cc-title-bar-cached-data'));
+                            showAdvanceTitleBar(titleBarData, data.cart.item_count);
+                        }
+
                     }
                 }
 
