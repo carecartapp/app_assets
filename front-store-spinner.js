@@ -4,7 +4,7 @@
     
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.5/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.7/';
 
     var dataSpin = false;
 
@@ -38,10 +38,10 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    cssFileInjection(CDN_URL +"front-store-spinner.css?v=1.5.1");
+    cssFileInjection(CDN_URL +"front-store-spinner.css?v=1.5.7");
 
     setTimeout(function () {
-        scriptInjection(CDN_URL + "spinner.js?v=1.5.1", function () {
+        scriptInjection(CDN_URL + "spinner.js?v=1.5.7", function () {
 
 
             function Spin2WinWheel() {
