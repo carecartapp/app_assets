@@ -234,7 +234,7 @@
     position: fixed;
     box-shadow: 5px 0 100px 0 #251217;
     color: #fff;
-    z-index: 9999;
+    z-index: 9999999999;
     font-family: inherit;
 }
 #spin_a_sale_cc_store_front_module .content-spinner{
