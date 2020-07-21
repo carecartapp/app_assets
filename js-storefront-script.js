@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.5.7
-// Updated at: 19-06-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.7/
+// js-storefront-script GH v.1.5.8
+// Updated at: 21-07-2020
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.8/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -51,7 +51,7 @@ function AbandonedCart() {
     var isSupportOfWholeSale =0;
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.7/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.8/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -892,19 +892,21 @@ function AbandonedCart() {
             window.org_title = window.document.title;
             window.org_title_marq = 0;
 
-            carecartJquery('body').on('mouseleave', function (e) {
-                // console.log('mousemove');
-                if (window.cc_adv_title_timer > 0) {
-                    clearTimeout(window.cc_adv_title_timer);
-                    window.org_title_marq = 0;
-                    window.document.title = window.org_title;
-                }
-                window.cc_adv_title_timer = setTimeout(function () {
-                    // console.log('Timeout');
-                    window.org_title_marq = 1;
-                    titleScroller(data.title_bar_text + '\u00A0\u00A0\u00A0\u00A0\u00A0');
-                }, delayIntervalInSeconds);
-            });
+            //carecartJquery('body').on('mouseleave', function (e) {
+             setTimeout(function () {
+                     //console.log('im here');
+                    if (window.cc_adv_title_timer > 0) {
+                        clearTimeout(window.cc_adv_title_timer);
+                        window.org_title_marq = 0;
+                        window.document.title = window.org_title;
+                    }
+                    window.cc_adv_title_timer = setTimeout(function () {
+                        // console.log('Timeout');
+                        window.org_title_marq = 1;
+                        titleScroller(data.title_bar_text + '\u00A0\u00A0\u00A0\u00A0\u00A0');
+                    }, delayIntervalInSeconds);
+             }, 1000);
+            //});
         }
         window.onblur = function () {
             window.org_title_marq = 0;
@@ -1015,6 +1017,35 @@ function AbandonedCart() {
     /* Global Email Magnet Support */
 
 
+    /*//Cart reminder fixes*/
+    function ShowCartReminder(items=1) {
+        carecartJquery.ajax({
+
+            url: apiBaseUrl + "/api/cart/cartReminderSettings?shop="+store.domain,
+
+            dataType: 'json',
+
+            type: 'GET',
+
+            success: function (response) {
+
+                //var data = response.records.addToCartPopUp;
+                var titleDesignerData = response.records.titleDesigner;
+                scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
+
+                    var setIntervalForTitleDesigner = setInterval(function () {
+                        showTitleDesigner(titleDesignerData, items);
+                    }, 1000);
+
+                });//end of favicon scipt injection
+            }
+
+        });
+    }
+
+
+
+
     function addJqueryEventListeners() {
 
 
@@ -1116,32 +1147,9 @@ function AbandonedCart() {
 
         if (getParameterByName('cc-show-title-designer')) {
 
-            carecartJquery.ajax({
-
-                url: apiBaseUrl + "/api/cart/cartReminderSettings?shop="+store.domain,
-
-                dataType: 'json',
-
-                type: 'GET',
-
-                success: function (response) {
-
-                    //var data = response.records.addToCartPopUp;
-                    var titleDesignerData = response.records.titleDesigner;
-                    scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
-
-                            var setIntervalForTitleDesigner = setInterval(function () {
-                                showTitleDesigner(titleDesignerData, 1);
-                            }, 1000);
-
-                    });//end of favicon scipt injection
-                }
-
-            });
+            ShowCartReminder(1);
 
         }
-
-
 
         carecartJquery('body').on('click', '#cc_f-p-preview-email-btn', function () {
             if (getParameterByName('cc-preview-email-collector')) {
