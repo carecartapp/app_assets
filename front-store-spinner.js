@@ -1,10 +1,10 @@
 (function () {
     var d = new Date();
     var version = d.getSeconds();
-    
+
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.7/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.9/';
 
     var dataSpin = false;
 
@@ -79,7 +79,7 @@
                         r = t.wheelStrokeColor, o = t.wheelSize, a = o / 2, l = t.wheelTextColor, r = t.wheelStrokeColor, i = t.wheelStrokeWidth, s = t.wheelTextOffsetY, u = t.wheelImageOffsetY, c = t.wheelImageSize, h = t.wheelTextSize, p = t.centerCircleStrokeColor, f = t.centerCircleStrokeWidth, S = t.centerCircleFillColor, m = t.centerCircleSize, b = m / 2, w = t.segmentStrokeColor, T = t.segmentStrokeWidth, y = t.segmentValuesArray, x = y.length, N = -1 == t.numSpins ? 1e16 : parseInt(t.numSpins), I = t.minSpinDuration, P = t.gameOverText, O = t.invalidSpinText, R = t.introText, W = t.hasSound, B = t.gameId, G = t.clickToSpin, A = (v = 360 / x) / 2, C = t.centerX, E = t.centerY, k = t.colorArray, D = t.hasShadows, F = t.spinDestinationArray, D && (K.setAttributeNS(null, "filter", "url(#shadow)"), et.setAttributeNS(null, "filter", "url(#shadow)"), nt.setAttributeNS(null, "filter", "url(#shadow)"), $.setAttributeNS(null, "filter", "url(#shadow)"), rt.style.boxShadow = "0px 0px 20px rgba(21,21,21,0.5)")
                     },
                     bt = function () {
-                        TweenMax.set("svg", {
+                        TweenMax.set("#spin_a_sale_cc_store_front_module svg", {
                             visibility: "visible"
                         }), TweenMax.set(j, {
                             svgOrigin: C + " " + E,
@@ -101,7 +101,7 @@
                         }), TweenMax.set([rt], {
                             xPercent: -50,
                             left: "50%"
-                        }), TweenMax.set("svg", {
+                        }), TweenMax.set("#spin_a_sale_cc_store_front_module svg", {
                             xPercent: -50,
                             left: "50%"
                         })
@@ -450,6 +450,7 @@
                 }
 
             }
+
             function myGameEndTest(i) {
                 var t = carecartJquery(".winContainer"),
                     l = carecartJquery(".loseContainer"),
@@ -491,7 +492,7 @@
             }
 
             function isValidEmailAddress(i) {
-               // return !/\S+@\S+\.\S+/.test(i)
+                // return !/\S+@\S+\.\S+/.test(i)
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return !re.test(String(i).toLowerCase());
             }
@@ -589,7 +590,8 @@
                 }
                 init();
                 applySASPlugin();
-                postImpressionData();
+                if (doNextPostImpressionsInfoRequest())
+                    postImpressionData();
             }
 
             function hideSpinASaleModule() {
@@ -709,6 +711,7 @@
                     crossDomain: true,
                     dataType: "json",
                     success: function (response) {
+                        updateCacheForPostImpressionsInfo();
                         if (response.result) {
                             console.log('Impression is post successfully');
                             console.log(error);
@@ -800,6 +803,26 @@
             function updateCachedTime() {
                 var timeNow = new Date();
                 window.localStorage.setItem('cc-sas-spinner-cached-time', timeNow);
+            }
+
+            function updateCacheForPostImpressionsInfo() {
+                window.localStorage.setItem('cc-sas-spinner-impressions-info-cached-time', Date.now());
+                console.log("postImpressionsInfo cache updated");
+            }
+
+            function doNextPostImpressionsInfoRequest() {
+                const prevTime = window.localStorage.getItem('cc-sas-spinner-impressions-info-cached-time');
+                console.log("prevTime impressions cache : " + prevTime);
+                var expiryTime = parseInt(prevTime) + (10 * 60000);
+                if (prevTime !== undefined && prevTime !== null) {//add 5min;
+                    console.log(prevTime + "asdasdas" + expiryTime + "dsdad" + Date.now());
+                    if (expiryTime <= Date.now()) {
+                        return true// 5min not passed so no need to send new request
+                    } else {
+                        return false;
+                    }
+                }
+                return true;
             }
 
             /* Post Data to Server END */
