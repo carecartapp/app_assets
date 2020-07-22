@@ -1,6 +1,6 @@
-// global-js-injector GH v.1.5.7
-// Updated at: 19-06-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.7/
+// global-js-injector GH v.1.5.9
+// Updated at: 21-07-2020
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.9/
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -41,7 +41,7 @@ function AbandonedCart() {
 
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.7/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.9/';
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
