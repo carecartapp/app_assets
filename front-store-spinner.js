@@ -3,8 +3,8 @@
     var version = d.getSeconds();
 
     var APP_URL = 'https://app-er.carecart.io/';
-    var API_URL = 'https://app-er-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.9/';
+    var API_URL = 'https://tracking-app-sas.carecart.io/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.0/';
 
     var dataSpin = false;
 
