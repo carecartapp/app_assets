@@ -1,6 +1,6 @@
-// global-js-injector GH v.1.5.9
+// global-js-injector GH v.1.5.10
 // Updated at: 21-07-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.9/
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.10/
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -41,7 +41,7 @@ function AbandonedCart() {
 
     var store = {};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.9/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.5.10/';
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
@@ -54,7 +54,7 @@ function AbandonedCart() {
                     storeData.store = {
                         'domain': Shopify.shop
                     }
-                    carecartJquery.ajax({
+                    /*carecartJquery.ajax({
                         url: apiBaseUrl + "/api/cart/store-front/need-reinstall-store",
                         type: 'POST',
                         data: storeData,
@@ -66,7 +66,7 @@ function AbandonedCart() {
                             console.log('need-reinstall-store error');
                             console.log(error);
                         }
-                    });
+                    });*/
                 } else {
 
                     customer = carecartJquery.parseJSON(carecartJquery('#care-cart-customer-information').text());
