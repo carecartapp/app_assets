@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.6.1
-// Updated at: 29-07-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.1/
+// js-storefront-script GH v.1.6.2
+// Updated at: 03-09-2020
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.2/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -37,6 +37,28 @@ function scriptInjection(src, callback) {
 
 }
 
+function getCustomerId(){
+    try {
+        let curr = window.ShopifyAnalytics.meta.page.customerId;
+        if (curr !== undefined && curr !== null && curr !== "") {
+            return curr;
+        }
+    } catch(e) { }
+    try {
+        let curr = window.meta.page.customerId;
+        if (curr !== undefined && curr !== null && curr !== "") {
+            return curr;
+        }
+    } catch (e) { }
+    try {
+        let curr = _st.cid;
+        if (curr !== undefined && curr !== null && curr !== "") {
+            return curr;
+        }
+    } catch (e) { }
+    return null;
+}
+
 function cssFileInjection(href) {
     var link = document.createElement("link");
     link.href = href;
@@ -47,11 +69,11 @@ function cssFileInjection(href) {
 
 function AbandonedCart() {
 
-    var customer = {};
+    var customer = {"id":getCustomerId()};
     var isSupportOfWholeSale =0;
-    var store = {};
+    var store = {'domain': Shopify.shop};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.1/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.2/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -73,32 +95,7 @@ function AbandonedCart() {
                 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
                 cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.6");
                 scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
-		scriptInjection(scriptBuildUrl+"front-store-spinner.js");
-
-                if (carecartJquery('#care-cart-customer-information').length == 0 || carecartJquery('#care-cart-shop-information').length == 0) {
-                    var storeData = {};
-                    storeData.store = {
-                        'domain': Shopify.shop
-                    }
-
-                   /* carecartJquery.ajax({
-                        url: apiBaseUrl + "/api/cart/store-front/need-reinstall-store",
-                        type: 'POST',
-                        data: storeData,
-                        success: function (response) {
-                            console.log('need-reinstall-store response');
-                            console.log(response);
-                        },
-                        error: function (error) {
-                            console.log('need-reinstall-store error');
-                            console.log(error);
-                        }
-                    });*/
-                } else {
-
-                    customer = carecartJquery.parseJSON(carecartJquery('#care-cart-customer-information').text());
-                    store = carecartJquery.parseJSON(carecartJquery('#care-cart-shop-information').text());
-                }
+		        scriptInjection(scriptBuildUrl+"front-store-spinner.js");
 
 
                 addJqueryEventListeners();
@@ -487,7 +484,7 @@ function AbandonedCart() {
         if (getParameterByName('cc-preview-email-collector')) {
             return;
         }
-        if (cartData && !cartData.email && cartData.item_count != 0) {
+        if (cartData && !cartData.email && cartData.item_count != 0 && !customer.id) {
             if (addToCartPopUpData && addToCartPopUpData.is_active && addToCartPopUpData.is_active != 0) {
 
                 if (!cartData.email) {
@@ -1342,6 +1339,7 @@ function AbandonedCart() {
 
         return;
     }, false);
+
 
     function openPermissionTab(url, title, w, h) {
         var left = (screen.width / 2) - (w / 2);
