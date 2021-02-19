@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.6.2
-// Updated at: 03-09-2020
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.2/
+// js-storefront-script GH v.1.6.3
+// Updated at: 19-02-2021
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.3/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -73,7 +73,7 @@ function AbandonedCart() {
     var isSupportOfWholeSale =0;
     var store = {'domain': Shopify.shop};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.2/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.3/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -91,11 +91,15 @@ function AbandonedCart() {
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
             scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js", function () {
                 window.carecartJquery = jQuery.noConflict(true);
-                scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
+                //scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
+                scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js");
                 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-                cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.6");
-                scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
-		        scriptInjection(scriptBuildUrl+"front-store-spinner.js");
+                //cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.6");
+                cssFileInjection(scriptBuildUrl+"cc.sweetalert2.min.css");
+                //scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
+                scriptInjection(scriptBuildUrl+"cc.sweetalert2.all.min.js");
+                //scriptInjection(scriptBuildUrl+"front-store-spinner.js");
+                scriptInjection(scriptBuildUrl+"front-store-spinner.min.js");
 
 
                 addJqueryEventListeners();
@@ -345,7 +349,7 @@ function AbandonedCart() {
                 console.log("Update cart on command center");
 
                 //var cartHash_cached = "1";
-               // var cartHash_live = "2";
+                // var cartHash_live = "2";
 
                 try {
                     cartHash_cached = String(window.localStorage.getItem('cartHash_cached'));
@@ -354,7 +358,7 @@ function AbandonedCart() {
                 }
 
                 if ((cartHash_cached != cartHash_live || impressionBy != '') && data.cart.item_count > 0) {
-		        if(isCheckForCall){
+                    if(isCheckForCall){
 
                         isCheckForCall = false;
 
@@ -376,8 +380,8 @@ function AbandonedCart() {
                                     pnSubscriptionPopupData = (response && response.records && response.records.pnSubscriptionPopup) ? response.records.pnSubscriptionPopup : {};
                                     pnChildWindowData = (response && response.records && response.records.pnSubscriptionPopupChildWindow) ? response.records.pnSubscriptionPopupChildWindow : {};
                                     window.localStorage.setItem('cc-title-bar-cached-data', JSON.stringify(titleDesignerData));
-				    showAdvanceTitleBar(titleDesignerData, cartData.item_count);
-				    if (activeInterface == 'LITE') {
+                                    showAdvanceTitleBar(titleDesignerData, cartData.item_count);
+                                    if (activeInterface == 'LITE') {
                                         showPnSubscriptionPopup(pnSubscriptionPopupData);
                                     }else{
                                         ccPnAuthUrl = "pn-app-er.carecart.io";
@@ -412,7 +416,7 @@ function AbandonedCart() {
                         });
                     }
                 }
-		 else{
+                else{
                     if(data.cart.item_count > 0){
                         var titleBarCachedData = window.localStorage.getItem('cc-title-bar-cached-data');
                         if (titleBarCachedData !== undefined && titleBarCachedData !== null) {
@@ -866,7 +870,8 @@ function AbandonedCart() {
 
 
     function showAdvanceTitleBar(data, itemCount) {
-        scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
+        //scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
+        scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js", function () {//start of favicon scipt injection
             if (getParameterByName('cc-show-title-designer')) {
                 var setIntervalForTitleDesigner = setInterval(function () {
                     showTitleDesigner(data, itemCount);
@@ -888,19 +893,19 @@ function AbandonedCart() {
             window.org_title_marq = 0;
 
             //carecartJquery('body').on('mouseleave', function (e) {
-             setTimeout(function () {
-                     //console.log('im here');
-                    if (window.cc_adv_title_timer > 0) {
-                        clearTimeout(window.cc_adv_title_timer);
-                        window.org_title_marq = 0;
-                        window.document.title = window.org_title;
-                    }
-                    window.cc_adv_title_timer = setTimeout(function () {
-                        // console.log('Timeout');
-                        window.org_title_marq = 1;
-                        titleScroller(data.title_bar_text + '\u00A0\u00A0\u00A0\u00A0\u00A0');
-                    }, delayIntervalInSeconds);
-             }, 1000);
+            setTimeout(function () {
+                //console.log('im here');
+                if (window.cc_adv_title_timer > 0) {
+                    clearTimeout(window.cc_adv_title_timer);
+                    window.org_title_marq = 0;
+                    window.document.title = window.org_title;
+                }
+                window.cc_adv_title_timer = setTimeout(function () {
+                    // console.log('Timeout');
+                    window.org_title_marq = 1;
+                    titleScroller(data.title_bar_text + '\u00A0\u00A0\u00A0\u00A0\u00A0');
+                }, delayIntervalInSeconds);
+            }, 1000);
             //});
         }
         window.onblur = function () {
@@ -1026,7 +1031,8 @@ function AbandonedCart() {
 
                 //var data = response.records.addToCartPopUp;
                 var titleDesignerData = response.records.titleDesigner;
-                scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
+                //scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
+                scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js", function () {//start of favicon scipt injection
 
                     var setIntervalForTitleDesigner = setInterval(function () {
                         showTitleDesigner(titleDesignerData, items);
