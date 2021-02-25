@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.6.3
-// Updated at: 19-02-2021
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.3/
+// js-storefront-script GH v.1.6.4
+// Updated at: 25-02-2021
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.4/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
