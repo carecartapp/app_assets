@@ -38,10 +38,10 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    cssFileInjection(CDN_URL +"front-store-spinner.css?v=1.5.7");
+    cssFileInjection(CDN_URL +"front-store-spinner.min.css");
 
     setTimeout(function () {
-        scriptInjection(CDN_URL + "spinner.js?v=1.5.7", function () {
+        scriptInjection(CDN_URL + "spinner.min.js", function () {
 
 
             function Spin2WinWheel() {
