@@ -4,7 +4,7 @@
 
     var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://tracking-app-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.1/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.4/';
 
     var dataSpin = false;
 
@@ -148,7 +148,7 @@
                     Nt = function () {
                         var t = document.createElementNS(U, "g"),
                             e = document.createElementNS(U, "image");
-                        t.appendChild(e), e.setAttribute("class", "wheelLogo"), e.setAttributeNS(null, "x", C - 60), e.setAttributeNS(null, "y", E - 60), e.setAttributeNS(Y, "xlink:href", "https://sw.secomapp.com/img/app_icon.png"), e.setAttributeNS(null, "width", 120), e.setAttributeNS(null, "height", 120), et.appendChild(t);
+                        t.appendChild(e), e.setAttribute("class", "wheelLogo"), e.setAttributeNS(null, "x", C - 60), e.setAttributeNS(null, "y", E - 60), e.setAttributeNS(Y, "xlink:href", CDN_URL + "cc_spinner_app_icon.png"), e.setAttributeNS(null, "width", 120), e.setAttributeNS(null, "height", 120), et.appendChild(t);
                         for (var n = 0; n < x; n++) {
                             var r = document.createElementNS(U, "g");
                             if ("image" == y[n].type) {
