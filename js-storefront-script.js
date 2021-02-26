@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.6.5
-// Updated at: 25-02-2021
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.5/
+// js-storefront-script GH v.1.6.6
+// Updated at: 26-02-2021
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.6/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -73,7 +73,7 @@ function AbandonedCart() {
     var isSupportOfWholeSale =0;
     var store = {'domain': Shopify.shop};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.5/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.6/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -91,14 +91,10 @@ function AbandonedCart() {
         scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
             scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js", function () {
                 window.carecartJquery = jQuery.noConflict(true);
-                //scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js");
                 scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js");
                 scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-                //cssFileInjection(apiBaseUrl+"/css/api/cc.sweetalert2.css?v1.5.6");
                 cssFileInjection(scriptBuildUrl+"cc.sweetalert2.min.css");
-                //scriptInjection(apiBaseUrl+"/js/api/cc.sweetalert2.all.js");
                 scriptInjection(scriptBuildUrl+"cc.sweetalert2.all.min.js");
-                //scriptInjection(scriptBuildUrl+"front-store-spinner.js");
                 scriptInjection(scriptBuildUrl+"front-store-spinner.min.js");
 
 
@@ -646,7 +642,7 @@ function AbandonedCart() {
         }
 
         var closeButton = "";
-        var bannerImageURl = (data.email_banner_public_url != '') ? data.email_banner_public_url : apiBaseUrl + '/img/cart-popup.png';
+        var bannerImageURl = (data.email_banner_public_url != '') ? data.email_banner_public_url : scriptBuildUrl + 'cart-popup.png';
         var headingFontWeight = (data.heading_is_bold == 1) ? 'bold' : 'normal';
         var headingFontStyle = (data.heading_is_italic == 1) ? 'italic' : 'normal';
         var headingFontSize = data.heading_font_size + 'px';
@@ -846,7 +842,7 @@ function AbandonedCart() {
         var popupDescription = popupData.popup_description_text;
         var popupAllowButtonText = popupData.popup_allow_button_text;
         var popupDisAllowButtonText = popupData.popup_disallow_button_text;
-        var popupLogoUrl = popupData.popup_logo_public_url || apiBaseUrl + '/img/push-not--pop.png';
+        var popupLogoUrl = popupData.popup_logo_public_url || scriptBuildUrl + 'push-not--pop.png';
         var appearanceLocation = popupData.appearance_location;
         var isPoweredByTextStatus = popupData.is_active_powered_by;
         var popupDelay = popupData.popup_delay_in_seconds;
@@ -854,7 +850,7 @@ function AbandonedCart() {
 
         var tmplHtml = popupData.pn_subscription_popup_template.html;
 
-        var preparedHtml = tmplHtml.replace('{CC-PN-POWERED-BY-IMG}', apiBaseUrl + '/img/logo.png');
+        var preparedHtml = tmplHtml.replace('{CC-PN-POWERED-BY-IMG}', scriptBuildUrl + 'logo.png');
         var preparedHtml = preparedHtml.replace('{CC-PN-SP-IMAGE}', popupLogoUrl);
         var preparedHtml = preparedHtml.replace('{CC-PN-SP-TITLE}', popupTitle);
         var preparedHtml = preparedHtml.replace('{CC-PN-SP-DESCRIPTION}', popupDescription);
@@ -870,7 +866,6 @@ function AbandonedCart() {
 
 
     function showAdvanceTitleBar(data, itemCount) {
-        //scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
         scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js", function () {//start of favicon scipt injection
             if (getParameterByName('cc-show-title-designer')) {
                 var setIntervalForTitleDesigner = setInterval(function () {
@@ -1031,7 +1026,6 @@ function AbandonedCart() {
 
                 //var data = response.records.addToCartPopUp;
                 var titleDesignerData = response.records.titleDesigner;
-                //scriptInjection(apiBaseUrl + "/plugins/favicon/favico-0.3.10.min.js?v2", function () {//start of favicon scipt injection
                 scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js", function () {//start of favicon scipt injection
 
                     var setIntervalForTitleDesigner = setInterval(function () {
@@ -1089,7 +1083,7 @@ function AbandonedCart() {
                     }
 
                     var closeButton = "";
-                    var bannerImageURl = (data.email_banner_public_url != '') ? data.email_banner_public_url : apiBaseUrl + '/img/cart-popup.png';
+                    var bannerImageURl = (data.email_banner_public_url != '') ? data.email_banner_public_url : scriptBuildUrl + 'cart-popup.png';
                     var headingFontWeight = (data.heading_is_bold == 1) ? 'bold' : 'normal';
                     var headingFontStyle = (data.heading_is_italic == 1) ? 'italic' : 'normal';
                     var headingFontSize = data.heading_font_size + 'px';
