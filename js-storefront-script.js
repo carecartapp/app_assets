@@ -1,6 +1,6 @@
-// js-storefront-script GH v.1.6.6
-// Updated at: 26-02-2021
-// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.6/
+// js-storefront-script GH v.1.6.7
+// Updated at: 11-03-2021
+// https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.7/
 var isAjax = 0;
 var isCartLoading = 0;
 var isCheckForCall = true;
@@ -28,7 +28,7 @@ function scriptInjection(src, callback) {
     script.type = "text/javascript";
 
     script.src = src;
-    if (typeof  callback == 'function') {
+    if (typeof callback == 'function') {
         script.addEventListener('load', callback);
     }
 
@@ -37,25 +37,28 @@ function scriptInjection(src, callback) {
 
 }
 
-function getCustomerId(){
+function getCustomerId() {
     try {
         let curr = window.ShopifyAnalytics.meta.page.customerId;
         if (curr !== undefined && curr !== null && curr !== "") {
             return curr;
         }
-    } catch(e) { }
+    } catch (e) {
+    }
     try {
         let curr = window.meta.page.customerId;
         if (curr !== undefined && curr !== null && curr !== "") {
             return curr;
         }
-    } catch (e) { }
+    } catch (e) {
+    }
     try {
         let curr = _st.cid;
         if (curr !== undefined && curr !== null && curr !== "") {
             return curr;
         }
-    } catch (e) { }
+    } catch (e) {
+    }
     return null;
 }
 
@@ -69,11 +72,11 @@ function cssFileInjection(href) {
 
 function AbandonedCart() {
 
-    var customer = {"id":getCustomerId()};
-    var isSupportOfWholeSale =0;
+    var customer = {"id": getCustomerId()};
+    var isSupportOfWholeSale = 0;
     var store = {'domain': Shopify.shop};
     var apiBaseUrl = "https://app-er.carecart.io";
-    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.6/';
+    var scriptBuildUrl = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.7/';
     var ccPnAuthUrl = "pn-app-er.carecart.io";
     var pnSubscriptionPopupData = {};
     var pnChildWindowData = {};
@@ -83,26 +86,30 @@ function AbandonedCart() {
     this.init = function (callback, callbackArgs) {
         console.log("Initialization started");
 
-        if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
-            || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) {
+        if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
+            || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) {
             isCheckForMobile = true;
         }
 
-        scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
-            scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js", function () {
+        //scriptInjection("https://code.jquery.com/jquery-3.2.1.min.js", function () {
+        scriptInjection(scriptBuildUrl + "jquery-3.2.1.min.js", function () {
+            //scriptInjection("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js", function () {
+            scriptInjection(scriptBuildUrl + "cryptojs-v3.1.2.js", function () {
                 window.carecartJquery = jQuery.noConflict(true);
                 scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js");
-                scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
-                cssFileInjection(scriptBuildUrl+"cc.sweetalert2.min.css");
-                scriptInjection(scriptBuildUrl+"cc.sweetalert2.all.min.js");
-                scriptInjection(scriptBuildUrl+"front-store-spinner.min.js");
+                //scriptInjection("https://use.fontawesome.com/e0a385ecbc.js");
+                scriptInjection(scriptBuildUrl + "use.fontawesome.js");
+                cssFileInjection(scriptBuildUrl + "cc.sweetalert2.min.css");
+                scriptInjection(scriptBuildUrl + "cc.sweetalert2.all.min.js");
+                scriptInjection(scriptBuildUrl + "front-store-spinner.min.js");
 
 
                 addJqueryEventListeners();
 
 
-                if((new RegExp("cc-preview-email-collector=yes")).test(window.location.href)){
-                    checkAddToCartPopup(null, null, function(){}, '');
+                if ((new RegExp("cc-preview-email-collector=yes")).test(window.location.href)) {
+                    checkAddToCartPopup(null, null, function () {
+                    }, '');
                 }
 
 
@@ -221,7 +228,7 @@ function AbandonedCart() {
 
 
     function isOnlyRecoverCart(cart) {
-        if(isCartLoading == 1) {
+        if (isCartLoading == 1) {
             return;
         }
 
@@ -298,12 +305,12 @@ function AbandonedCart() {
 
     };
 
-    this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy='') {
+    this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy = '') {
 
         getCart(function (cart) {
             if (isCapturedByPopup == 1) {
                 cart.is_email_captured_by_popup = 1;
-                impressionBy='EMAIL_COLLECTOR'
+                impressionBy = 'EMAIL_COLLECTOR'
             }
 
             if (isCapturedByMagnet == 1) {
@@ -325,7 +332,7 @@ function AbandonedCart() {
             /*Support of email magnet*/
             checkIfMagnetEmailExist();
             var cachedEmail = window.localStorage.getItem('cc-magnet-email-captured');
-            if(cachedEmail){
+            if (cachedEmail) {
                 cart.is_captured_by_email_magnet = 1;
             }
             /*end*/
@@ -354,7 +361,7 @@ function AbandonedCart() {
                 }
 
                 if ((cartHash_cached != cartHash_live || impressionBy != '') && data.cart.item_count > 0) {
-                    if(isCheckForCall){
+                    if (isCheckForCall) {
 
                         isCheckForCall = false;
 
@@ -379,7 +386,7 @@ function AbandonedCart() {
                                     showAdvanceTitleBar(titleDesignerData, cartData.item_count);
                                     if (activeInterface == 'LITE') {
                                         showPnSubscriptionPopup(pnSubscriptionPopupData);
-                                    }else{
+                                    } else {
                                         ccPnAuthUrl = "pn-app-er.carecart.io";
                                         showProPnSubscriptionPopup(pnSubscriptionPopupData);
                                     }
@@ -402,7 +409,7 @@ function AbandonedCart() {
                                     checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface);
                                     enableEmailMagnet(cartData);
                                     window.localStorage.setItem('cartHash_cached', cartHash_live);
-                                }else {
+                                } else {
                                     if (getParameterByName('cc-show-title-designer')) {
                                         var titleDesignerData = response.records.titleDesigner;
                                         showAdvanceTitleBar(titleDesignerData, 1);
@@ -411,9 +418,8 @@ function AbandonedCart() {
                             }
                         });
                     }
-                }
-                else{
-                    if(data.cart.item_count > 0){
+                } else {
+                    if (data.cart.item_count > 0) {
                         var titleBarCachedData = window.localStorage.getItem('cc-title-bar-cached-data');
                         if (titleBarCachedData !== undefined && titleBarCachedData !== null) {
                             var titleBarData = JSON.parse(window.localStorage.getItem('cc-title-bar-cached-data'));
@@ -434,7 +440,7 @@ function AbandonedCart() {
         if (cartData && !cartData.email) {
             carecartJquery(document).on('blur', 'input:not(.ccswal2-input)', function (e) {
 
-                if(!e.originalEvent.isTrusted){
+                if (!e.originalEvent.isTrusted) {
                     return false;
                 }
 
@@ -470,13 +476,13 @@ function AbandonedCart() {
 
     function checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface) {
         var previousCachedTime = window.localStorage.getItem('timeData');
-        if(previousCachedTime!==undefined){
+        if (previousCachedTime !== undefined) {
             var currentTime = new Date();
             var previousTime = new Date(previousCachedTime);
             var msec = parseInt(currentTime - previousTime);
             var mins = parseInt(Math.floor(msec / 60000));
-            if(mins<=5){
-                console.log('Time remaining : '+ mins);
+            if (mins <= 5) {
+                console.log('Time remaining : ' + mins);
                 return;
             }
         }
@@ -667,19 +673,19 @@ function AbandonedCart() {
         var buttonText = data.button_text;
         var buttonBackgroundColor = data.button_background_color;
 
-        var titlehtml = "<h2 style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + headingFontSize +";color:"+ headingColor +" ;text-align:" + headingTextAlignment + ";font-weight:" + headingFontWeight +";font-style: " + headingFontStyle +"'>"+ headingText +"</h2>"; //addToCartPopUpData.heading_text,
-        var descripionText = "<p style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + descriptionFontSize +";color:"+ descriptionColor +";text-align:" + descriptionTextAlignment +";font-weight: " + descriptionFontWeight +";font-style:" + descriptionFontStyle +";'>" + descriptionText + "</p>";
+        var titlehtml = "<h2 style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + headingFontSize + ";color:" + headingColor + " ;text-align:" + headingTextAlignment + ";font-weight:" + headingFontWeight + ";font-style: " + headingFontStyle + "'>" + headingText + "</h2>"; //addToCartPopUpData.heading_text,
+        var descripionText = "<p style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + descriptionFontSize + ";color:" + descriptionColor + ";text-align:" + descriptionTextAlignment + ";font-weight: " + descriptionFontWeight + ";font-style:" + descriptionFontStyle + ";'>" + descriptionText + "</p>";
         CCSwal.fire({
             title: titlehtml,
             html: descripionText,
             input: 'email',
             inputPlaceholder: emailPlaceHolder,
             inputAutoTrim: true,
-            confirmButtonText:  "<span style='font-size:" + buttonFontSize +";color:"+ buttonColor +";font-style:"+ buttonFontStyle +";font-weight:" + buttonFontWeight +"'>"+buttonText+"</span>",
+            confirmButtonText: "<span style='font-size:" + buttonFontSize + ";color:" + buttonColor + ";font-style:" + buttonFontStyle + ";font-weight:" + buttonFontWeight + "'>" + buttonText + "</span>",
             confirmButtonColor: buttonBackgroundColor,
             showCancelButton: false,
             cancelButtonText: 'No, cancel!',
-            showCloseButton: (data.is_active_close_button==1?true:false),
+            showCloseButton: (data.is_active_close_button == 1 ? true : false),
             imageUrl: bannerImageURl,
             imageWidth: 100,
             allowOutsideClick: false,
@@ -696,12 +702,12 @@ function AbandonedCart() {
 
                 abandonedCart.process(1, function () {
                     carecartJquery('form[action="/cart/add"]').submit();
-                },'', 'EMAIL_COLLECTOR');
+                }, '', 'EMAIL_COLLECTOR');
                 //abandonedCart.process(1,'','','EMAIL_COLLECTOR');
-            }else if(result.dismiss){
+            } else if (result.dismiss) {
                 var timeNow = new Date();
                 window.localStorage.setItem('timeData', timeNow);
-                abandonedCart.process(0,'','','EMAIL_COLLECTOR');
+                abandonedCart.process(0, '', '', 'EMAIL_COLLECTOR');
             }
         });
 
@@ -771,10 +777,10 @@ function AbandonedCart() {
                     setTimeout(function () {
                         carecartJquery('body').append(preparedHtml);
                         carecartJquery('#cc_pn_notification_template').css({'position': 'fixed'});
-                        if(window.innerWidth >= 1012) {
+                        if (window.innerWidth >= 1012) {
                             var left = '35%';
                             var width = '420px';
-                        }else{
+                        } else {
                             var left = '25%';
                             var width = '50%';
                         }
@@ -801,8 +807,8 @@ function AbandonedCart() {
                                 'right': '15px'
                             });
                         }
-                        if(isCheckForMobile){
-                            if(window.innerWidth <= 768 && window.innerWidth >= 525) {
+                        if (isCheckForMobile) {
+                            if (window.innerWidth <= 768 && window.innerWidth >= 525) {
                                 var left = '20%';
                                 var width = '65%';
                                 if (popupData.appearance_location == 'TOP_CENTER') {
@@ -812,7 +818,7 @@ function AbandonedCart() {
                                     });
                                 }
 
-                            }else if(window.innerWidth <= 525){
+                            } else if (window.innerWidth <= 525) {
                                 var left = '-8px';
                                 var right = '2%';
                                 var width = '95%';
@@ -863,8 +869,6 @@ function AbandonedCart() {
     };
 
 
-
-
     function showAdvanceTitleBar(data, itemCount) {
         scriptInjection(scriptBuildUrl + "favico-0.3.10.min.js", function () {//start of favicon scipt injection
             if (getParameterByName('cc-show-title-designer')) {
@@ -906,6 +910,7 @@ function AbandonedCart() {
         window.onblur = function () {
             window.org_title_marq = 0;
         };
+
         function titleScroller(titleText) {
             window.document.title = titleText;
             //if (window.org_title_marq)
@@ -972,7 +977,7 @@ function AbandonedCart() {
     }
 
     /* Global Email Magnet Support */
-    function checkIfMagnetEmailExist(){
+    function checkIfMagnetEmailExist() {
         console.log('email magnet is checked');
         var cachedEmail = window.localStorage.getItem('cc-magnet-email-captured');
         if (customer && !customer.email && cachedEmail) {
@@ -983,15 +988,15 @@ function AbandonedCart() {
                 var msec = parseInt(currentTime - previousTime);
                 var mins = parseInt(Math.floor(msec / 60000));
                 if (mins <= 1440) {
-                    if (cachedEmail){
+                    if (cachedEmail) {
                         console.log('email is dispatched with cart');
                         customer.email = cachedEmail;
-                    }else{
+                    } else {
                         console.log('cached email not available');
                         localStorage.removeItem('email-magnet-expiry');
                         localStorage.removeItem('cc-magnet-email-captured');
                     }
-                }else {
+                } else {
                     console.log('email time is expired');
                     localStorage.removeItem('email-magnet-expiry');
                     localStorage.removeItem('cc-magnet-email-captured');
@@ -1001,7 +1006,7 @@ function AbandonedCart() {
                 localStorage.removeItem('email-magnet-expiry');
                 localStorage.removeItem('cc-magnet-email-captured');
             }
-        }else{
+        } else {
             console.log('email already exits');
             localStorage.removeItem('email-magnet-expiry');
             localStorage.removeItem('cc-magnet-email-captured');
@@ -1013,10 +1018,10 @@ function AbandonedCart() {
 
 
     /*//Cart reminder fixes*/
-    function ShowCartReminder(items=1) {
+    function ShowCartReminder(items = 1) {
         carecartJquery.ajax({
 
-            url: apiBaseUrl + "/api/cart/cartReminderSettings?shop="+store.domain,
+            url: apiBaseUrl + "/api/cart/cartReminderSettings?shop=" + store.domain,
 
             dataType: 'json',
 
@@ -1037,8 +1042,6 @@ function AbandonedCart() {
 
         });
     }
-
-
 
 
     function addJqueryEventListeners() {
@@ -1065,7 +1068,7 @@ function AbandonedCart() {
 
             carecartJquery.ajax({
 
-                url: apiBaseUrl + "/api/cart/popupSettings?shop="+store.domain,
+                url: apiBaseUrl + "/api/cart/popupSettings?shop=" + store.domain,
 
                 dataType: 'json',
 
@@ -1108,19 +1111,19 @@ function AbandonedCart() {
                     var buttonText = data.button_text;
                     var buttonBackgroundColor = data.button_background_color;
 
-                    var titlehtml = "<h2 style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + headingFontSize +";color:"+ headingColor +" ;text-align:" + headingTextAlignment + ";font-weight:" + headingFontWeight +";font-style: " + headingFontStyle +"'>"+ headingText +"</h2>"; //addToCartPopUpData.heading_text,
-                    var descripionText = "<p style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + descriptionFontSize +";color:"+ descriptionColor +";text-align:" + descriptionTextAlignment +";font-weight: " + descriptionFontWeight +";font-style:" + descriptionFontStyle +";'>" + descriptionText + "</p>";
+                    var titlehtml = "<h2 style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + headingFontSize + ";color:" + headingColor + " ;text-align:" + headingTextAlignment + ";font-weight:" + headingFontWeight + ";font-style: " + headingFontStyle + "'>" + headingText + "</h2>"; //addToCartPopUpData.heading_text,
+                    var descripionText = "<p style='text-transform: unset;font-family: Open Sans, sans-serif;font-size:" + descriptionFontSize + ";color:" + descriptionColor + ";text-align:" + descriptionTextAlignment + ";font-weight: " + descriptionFontWeight + ";font-style:" + descriptionFontStyle + ";'>" + descriptionText + "</p>";
                     CCSwal.fire({
                         title: titlehtml,
                         html: descripionText,
                         input: 'email',
                         inputPlaceholder: emailPlaceHolder,
                         inputAutoTrim: true,
-                        confirmButtonText:  "<span style='font-size:" + buttonFontSize +";color:"+ buttonColor +";font-style:"+ buttonFontStyle +";font-weight:" + buttonFontWeight +"'>"+buttonText+"</span>",
+                        confirmButtonText: "<span style='font-size:" + buttonFontSize + ";color:" + buttonColor + ";font-style:" + buttonFontStyle + ";font-weight:" + buttonFontWeight + "'>" + buttonText + "</span>",
                         confirmButtonColor: buttonBackgroundColor,
                         showCancelButton: false,
                         cancelButtonText: 'No, cancel!',
-                        showCloseButton: (data.is_active_close_button==1?true:false),
+                        showCloseButton: (data.is_active_close_button == 1 ? true : false),
                         imageUrl: bannerImageURl,
                         imageWidth: 100,
                         allowOutsideClick: false,
@@ -1149,8 +1152,7 @@ function AbandonedCart() {
         carecartJquery('body').on('click', '#cc_f-p-preview-email-btn', function () {
             if (getParameterByName('cc-preview-email-collector')) {
                 carecartJquery('#cc-atcp-table', 'body').hide();
-            }
-            else {
+            } else {
                 carecartJquery('#cc_f-p-preview-email-placeholder-error', 'body').hide();
                 var email = carecartJquery('#cc_f-p-preview-email-placeholder', 'body').val();
                 if (!validateEmail(email)) {
@@ -1158,7 +1160,7 @@ function AbandonedCart() {
                 } else {
                     customer.email = email;
                     abandonedCart.process(1, function () {
-                        if(carecartJquery('form[action="/cart/add"]').length  && window.location.pathname != '/cart') {
+                        if (carecartJquery('form[action="/cart/add"]').length && window.location.pathname != '/cart') {
                             carecartJquery('form[action="/cart/add"]').submit();
                         }
                     });
@@ -1192,8 +1194,7 @@ function AbandonedCart() {
             if (data != null && data == 'close_email') {
                 if (getParameterByName('cc-preview-email-collector')) {
                     carecartJquery('#cc-atcp-table', 'body').show();
-                }
-                else {
+                } else {
                     carecartJquery('#cc-atcp-table', 'body').hide();
                 }
             }
@@ -1202,15 +1203,14 @@ function AbandonedCart() {
                 //console.log(customer.email);
                 abandonedCart.process(1, function () {
                     if (isAjax == 0) {
-                        if(carecartJquery('form[action="/cart/add"]').length && window.location.pathname != '/cart') {
+                        if (carecartJquery('form[action="/cart/add"]').length && window.location.pathname != '/cart') {
                             carecartJquery('form[action="/cart/add"]').submit();
                         }
                     }
                 });
                 if (getParameterByName('cc-preview-email-collector')) {
                     carecartJquery('#cc-atcp-table', 'body').show();
-                }
-                else {
+                } else {
                     carecartJquery('#cc-atcp-table', 'body').hide();
                 }
             }
@@ -1240,7 +1240,7 @@ function AbandonedCart() {
                 var url = pointer.responseURL;
                 var lastPart = url.split('/');
                 var name = lastPart[lastPart.length - 1];
-                if(!isCartLoading){
+                if (!isCartLoading) {
                     if (name == 'add.js' || name == 'change.js') {
                         //Show email collector
                         isAjax = 1;
@@ -1303,7 +1303,7 @@ function AbandonedCart() {
         /*Global Email Magnet Support*/
         carecartJquery(document).on('blur', 'input:not(.ccswal2-input)', function (e) {
 
-            if(!e.originalEvent.isTrusted){
+            if (!e.originalEvent.isTrusted) {
                 return false;
             }
 
