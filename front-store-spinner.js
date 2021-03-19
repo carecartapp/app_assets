@@ -4,7 +4,7 @@
 
     //var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://tracking-app-sas.carecart.io/';
-    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.8/';
+    var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.9/';
 
     var dataSpin = false;
 
