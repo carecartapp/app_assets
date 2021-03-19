@@ -1,8 +1,8 @@
 (function () {
     var d = new Date();
-    var version = d.getSeconds();
+    //var version = d.getSeconds();
 
-    var APP_URL = 'https://app-er.carecart.io/';
+    //var APP_URL = 'https://app-er.carecart.io/';
     var API_URL = 'https://tracking-app-sas.carecart.io/';
     var CDN_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@1.6.8/';
 
@@ -826,7 +826,7 @@
             }
 
             /* Post Data to Server END */
-            
+
             function ifCachedData(){
                 var settingsCachedTime = window.localStorage.getItem('cc-sas-spinner-ajax-cached-time');
                 var settingsCachedData = window.localStorage.getItem('cc-sas-spinner-ajax-cached-data');
@@ -846,10 +846,10 @@
             }
             if (!getParameterByName('cc-show-spin-a-sale-test')) {
 
-                 if(ifCachedData()){
+                if(ifCachedData()){
                     console.log('In Cached Data:');
                     var cachedData = JSON.parse(window.localStorage.getItem('cc-sas-spinner-ajax-cached-data'));
-                     pupulateData(cachedData);
+                    pupulateData(cachedData);
                 }else{
                     carecartJquery.ajax({
                         url: API_URL + "store-front-api/get-store-information",
@@ -862,7 +862,7 @@
                         contentType: "application/json",
                         dataType: "json",
                         success: function (response) {
-                             window.localStorage.setItem('cc-sas-spinner-ajax-cached-time', d);
+                            window.localStorage.setItem('cc-sas-spinner-ajax-cached-time', d);
                             window.localStorage.setItem('cc-sas-spinner-ajax-cached-data', JSON.stringify(response));
                             pupulateData(response);
                         },
