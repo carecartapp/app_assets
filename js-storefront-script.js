@@ -1275,6 +1275,5 @@ function AbandonedCart() {
     }
 }
 
-
 var abandonedCart = new AbandonedCart();
 abandonedCart.init(abandonedCart.process, [0]);
