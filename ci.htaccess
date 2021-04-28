@@ -1,0 +1,13 @@
+RewriteEngine On
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*) index.php/$1
+
+SetEnvIf Origin ^(.*)$ ORIGIN_DOMAIN=$0
+<Files "*">
+  Header add Access-Control-Allow-Origin %{ORIGIN_DOMAIN}e
+  Header add Access-Control-Allow-Methods "GET, POST, OPTIONS"
+  Header add Access-Control-Allow-Headers "Authorization, X-Requested-With, Content-Type, Origin, Accept"
+  Header add Access-Control-Allow-Credentials "true"
+</Files>
