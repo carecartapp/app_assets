@@ -389,7 +389,7 @@ color: #fff;
 
 #spin-trigger-cc, #spin-trigger-cc:active, #spin-trigger-cc:focus, #spin-trigger-cc:hover, #spin-trigger-cc:visited {
     bottom: 30px;
-    right: 100px;
+    right: 10px;
     position: fixed;
     text-decoration: none;
     opacity: 1;
