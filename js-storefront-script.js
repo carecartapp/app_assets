@@ -1,6 +1,6 @@
-// js-storefront-script GH v.2.0.9
+// js-storefront-script GH v.2.0.10
 // Updated at: 08-06-2022 - 11:40 am
-// CDN ver 2.0.9
+// CDN ver 2.0.10
 
 var isAjax = 0;
 var isCartLoading = 0;
@@ -8,7 +8,7 @@ var isCheckForCall = true;
 var isCheckForMobile = false;
 var cartHash_cached = 0;
 var cartHash_live = 0;
-var CDN_APP_ER_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@2.0.9/';
+var CDN_APP_ER_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@2.0.10/';
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -633,7 +633,7 @@ function AbandonedCart() {
             imageUrl: bannerImageURl,
             imageWidth: 100,
             allowOutsideClick: false,
-            footer: (typeof data.is_active_powered_by !== 'undefined' && data.is_active_powered_by == 1 ? '<small style="color: #6c757d !important;">Powered by <a href="https://carecart.io" style="text-decoration: none;color: #1996FC;" class="card-link">CareCart</a></small>' : ''),
+            footer: (typeof data.is_active_powered_by !== 'undefined' && data.is_active_powered_by != 1 ? '<small style="color: #6c757d !important;">Powered by <a href="https://carecart.io" style="text-decoration: none;color: #1996FC;" class="card-link">CareCart</a></small>' : ''),
             //footer: 'Footer text',
             //reverseButtons: true,
             //type: 'success'
@@ -1050,7 +1050,7 @@ function AbandonedCart() {
                         imageUrl: bannerImageURl,
                         imageWidth: 100,
                         allowOutsideClick: false,
-                         footer: (typeof data.is_active_powered_by !== 'undefined' && data.is_active_powered_by == 1 ? '<small style="color: #6c757d !important;">Powered by <a href="https://carecart.io" style="text-decoration: none;color: #1996FC;" class="card-link">CareCart</a></small>' : ''),
+                         footer: (typeof data.is_active_powered_by !== 'undefined' && data.is_active_powered_by != 1 ? '<small style="color: #6c757d !important;">Powered by <a href="https://carecart.io" style="text-decoration: none;color: #1996FC;" class="card-link">CareCart</a></small>' : ''),
                         //footer: 'Footer text',
                         //reverseButtons: true,
                         //type: 'success'
