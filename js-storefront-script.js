@@ -1,6 +1,6 @@
-// js-storefront-script GH v.2.0.13
-// Updated at: 04-07-2022 - 03:40 pm
-// CDN ver 2.0.13
+// js-storefront-script GH v.2.0.14
+// Updated at: 20-10-2022 - 04:50 pm
+// CDN ver 2.0.14
 
 var isAjax = 0;
 var isCartLoading = 0;
@@ -8,7 +8,7 @@ var isCheckForCall = true;
 var isCheckForMobile = false;
 var cartHash_cached = 0;
 var cartHash_live = 0;
-var CDN_APP_ER_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@2.0.13/';
+var CDN_APP_ER_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@2.0.14/';
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
