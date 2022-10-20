@@ -605,7 +605,7 @@ function AbandonedCart() {
         var descriptionFontSize = data.description_font_size + 'px';
         var descriptionTextAlignment = data.description_text_align.toLowerCase();
         var descriptionColor = data.description_color;
-        var descriptionText = data.description_text;
+        var descriptionText = removeTags(data.description_text);
 
         var emailPlaceHolder = data.email_placeholder;
 
@@ -1022,7 +1022,7 @@ function AbandonedCart() {
                     var descriptionFontSize = data.description_font_size + 'px';
                     var descriptionTextAlignment = data.description_text_align.toLowerCase();
                     var descriptionColor = data.description_color;
-                    var descriptionText = data.description_text;
+                    var descriptionText = removeTags(data.description_text);
 
                     var emailPlaceHolder = data.email_placeholder;
 
@@ -1278,6 +1278,15 @@ function AbandonedCart() {
         }
     }
 }
+
+function removeTags(str) {
+    if ((str===null) || (str===''))
+    return false;
+    else
+    str = str.toString();
+    return str.replace( /(<([^>]+)>)/ig, '');
+ }
+
 
 var abandonedCart = new AbandonedCart();
 abandonedCart.init(abandonedCart.process, [0]);
