@@ -1,6 +1,6 @@
 // js-storefront-script GH v.2.0.14
 // Updated at: 20-10-2022 - 04:50 pm
-// CDN ver 2.0.14
+// CDN ver 2.0.22
 
 var isAjax = 0;
 var isCartLoading = 0;
@@ -8,7 +8,7 @@ var isCheckForCall = true;
 var isCheckForMobile = false;
 var cartHash_cached = 0;
 var cartHash_live = 0;
-var CDN_APP_ER_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@2.0.14/';
+var CDN_APP_ER_URL = 'https://cdn.jsdelivr.net/gh/carecartapp/app_assets@2.0.22/';
 
 function getQueryParameters() {
     var prmstr = window.location.search.substr(1);
@@ -324,7 +324,59 @@ function AbandonedCart() {
         });
 
     };
+function getCollectorPopup(requestData, callback) {
+        carecartJquery.ajax({
+            url: apiBaseUrl + "/api/cart/store-front/collector-popup",
+            type: 'POST',
+            data: requestData,
+            dataType: 'json',
+            success: function (response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
 
+    function getCollectorPopupWithCache(store, cart, callBack) {
+        var cacheKey = 'collectorPopupResponse';
+        var cacheTimestampKey = 'collectorPopupTimestamp';
+        var cacheDuration = 3 * 60 * 1000; // 3 minutes in milliseconds
+
+        var cachedResponse = localStorage.getItem(cacheKey);
+        var cachedTimestamp = localStorage.getItem(cacheTimestampKey);
+
+        if (cachedResponse && cachedTimestamp) {
+            var now = new Date().getTime();
+            if (now - cachedTimestamp < cacheDuration) {
+                console.log('Using cached collector popup response:');
+                var response = JSON.parse(cachedResponse);
+                var activeInterface = response.records.active_interface;
+                var addToCartPopUpData = response.records.addToCartPopUp;
+                checkAddToCartPopup(cart, addToCartPopUpData, callBack, activeInterface);
+                return;
+            }
+        }
+
+
+        // If cache expired or not found, make API call
+        getCollectorPopup({ store: store }, function (response) {
+            console.log('Collector popup Response received:');
+
+            // Store response in localStorage
+            localStorage.setItem(cacheKey, JSON.stringify(response));
+            localStorage.setItem(cacheTimestampKey, new Date().getTime());
+
+            var activeInterface = response.records.active_interface;
+            var addToCartPopUpData = response.records.addToCartPopUp;
+
+            checkAddToCartPopup(cart, addToCartPopUpData, callBack, activeInterface);
+        });
+    }
+    
     this.process = function (isCapturedByPopup, callBack, isCapturedByMagnet, impressionBy = '') {
 
         getCart(function (cart) {
@@ -384,7 +436,7 @@ function AbandonedCart() {
                     if (isCheckForCall) {
 
                         isCheckForCall = false;
-
+                        getCollectorPopupWithCache(store, cart, callBack);
                         carecartJquery.ajax({
                             url: apiBaseUrl + "/api/cart/store-front/create",
                             dataType: 'json',
@@ -397,7 +449,7 @@ function AbandonedCart() {
                                     window.localStorage.setItem('cartHash_cached', cartHash_live);
                                     var activeInterface = response.records.active_interface;
                                     var cartData = response.records.cart;
-                                    var addToCartPopUpData = response.records.addToCartPopUp;
+                                   // var addToCartPopUpData = response.records.addToCartPopUp;
                                     var titleDesignerData = response.records.titleDesigner;
                                     carecartJquery('#CartDrawer').removeAttr('tabindex');
                                     pnSubscriptionPopupData = (response && response.records && response.records.pnSubscriptionPopup) ? response.records.pnSubscriptionPopup : {};
@@ -414,7 +466,7 @@ function AbandonedCart() {
                                         recoverCart(undefined, cartData);
                                     }
 
-                                    checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface);
+                                    //checkAddToCartPopup(cartData, addToCartPopUpData, callBack, activeInterface);
                                     enableEmailMagnet(cartData);
                                     window.localStorage.setItem('cartHash_cached', cartHash_live);
                                 } else {
